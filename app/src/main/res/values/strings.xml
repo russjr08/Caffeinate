@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Caffeinate</string>
+    <string name="caffeinate_tile_label">Caffeinate</string>
+    <string name="caffeination_in_progress">Caffeinate is running, your display will stay active in the meantime…</string>
+</resources>
