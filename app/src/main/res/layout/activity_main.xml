@@ -25,4 +25,6 @@
         android:textAppearance="?android:attr/textAppearance"
         android:textAlignment="center"
         android:text="Welcome! \n Caffeinate operates via your Quick Settings." />
+
+
 </LinearLayout>

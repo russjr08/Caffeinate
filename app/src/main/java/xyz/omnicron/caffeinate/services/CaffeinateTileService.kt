@@ -2,11 +2,15 @@ package xyz.omnicron.caffeinate.services
 
 import android.app.Notification
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.CountDownTimer
 import android.os.PowerManager
+import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import xyz.omnicron.caffeinate.R
+import java.util.*
 
 /**
 * @author russjr08
@@ -17,6 +21,9 @@ class CaffeinateTileService : TileService() {
     lateinit var wakeLock: PowerManager.WakeLock
     lateinit var timer: CountDownTimer
     lateinit var notification: Notification
+    val config = FirebaseRemoteConfig.getInstance()
+    lateinit var sharedPrefs: SharedPreferences
+
 
     val WL_TAG = "Caffeinate"
 
@@ -24,6 +31,10 @@ class CaffeinateTileService : TileService() {
         super.onCreate()
 
         val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        setupNotificationTestDefaults()
 
         wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, WL_TAG)
 
@@ -73,7 +84,10 @@ class CaffeinateTileService : TileService() {
     }
 
     fun createWakelock() {
-        startForeground(1, notification)
+        if(config.getBoolean("persistent_notification_for_tileservice") ||
+                sharedPrefs.getBoolean("opt_into_notification_test", false)) {
+            startForeground(1, notification)
+        }
 
         wakeLock.acquire()
 
@@ -82,15 +96,18 @@ class CaffeinateTileService : TileService() {
     }
 
     fun releaseWakelock() {
-        qsTile.state = Tile.STATE_INACTIVE
-        qsTile.label = getString(R.string.caffeinate_tile_label)
-        qsTile.updateTile()
+        qsTile?.state = Tile.STATE_INACTIVE
+        qsTile?.label = getString(R.string.caffeinate_tile_label)
+        qsTile?.updateTile()
 
         if(wakeLock.isHeld) {
             wakeLock.release()
         }
 
-        stopForeground(1)
+        if(config.getBoolean("persistent_notification_for_tileservice") ||
+                sharedPrefs.getBoolean("opt_into_notification_test", false)) {
+            stopForeground(1)
+        }
     }
 
     private fun timeConversion(remains: Long): String {
@@ -105,6 +122,14 @@ class CaffeinateTileService : TileService() {
         minutes -= hours * MINUTES_IN_AN_HOUR
 
         return String.format("%s:%s", minutes, seconds)
+    }
+
+    private fun setupNotificationTestDefaults() {
+        val defaults = HashMap<String, Any>()
+        defaults.put("persistent_notification_for_tileservice", false)
+
+        config.setDefaults(defaults)
+        config.fetch()
     }
 
 

@@ -20,14 +20,27 @@
 
         <service
             android:name=".services.CaffeinateTileService"
-            android:label="@string/caffeinate_tile_label"
             android:icon="@drawable/ic_tile_icon_24dp"
+            android:label="@string/caffeinate_tile_label"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+
+        <activity android:name=".ABTestingDebugActivity"
+            android:label="A/B Testing Debug Screen">
+
+            <intent-filter>
+                <action android:name="xyz.omnicron.caffeinate.ABTestingDebugActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>
