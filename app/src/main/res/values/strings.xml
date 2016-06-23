@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Caffeinate</string>
+
     <string name="caffeinate_tile_label">Caffeinate</string>
+    <string name="soundprofile_tile_label_vibrate">Vibrate</string>
+    <string name="soundprofile_tile_label_ringer">Normal</string>
+
     <string name="caffeination_in_progress">Caffeinate is running, your display will stay active in the meantime…</string>
     <string name="title_activity_settings">Settings</string>
 

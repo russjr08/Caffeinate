@@ -3,6 +3,7 @@
     package="xyz.omnicron.caffeinate">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +27,17 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
+        </service>
+
+        <service android:name=".services.SoundProfileTileService"
+            android:icon="@drawable/ic_notifications_black_24dp"
+            android:label="Sound Profile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+
         </service>
 
         <activity
