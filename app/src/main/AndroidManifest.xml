@@ -31,8 +31,11 @@
 
         <service android:name=".services.SoundProfileTileService"
             android:icon="@drawable/ic_notifications_black_24dp"
-            android:label="Sound Profile"
+            android:label="@string/tile_sound_label"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
 
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
