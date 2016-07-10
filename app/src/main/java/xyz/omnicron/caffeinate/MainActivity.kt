@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseRemoteConfig.getInstance().setDefaults(defaults as Map<String, Any>?)
         FirebaseRemoteConfig.getInstance().fetch()
+        FirebaseRemoteConfig.getInstance().activateFetched()
 
     }
 }

@@ -1,13 +1,17 @@
 package xyz.omnicron.caffeinate.services
 
 import android.app.Notification
+import android.app.Service
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.PowerManager
 import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import xyz.omnicron.caffeinate.R
 import java.util.*
@@ -59,6 +63,10 @@ class CaffeinateTileService : TileService() {
 
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return Service.START_STICKY
+    }
+
     override fun onClick() {
         super.onClick()
 
@@ -78,15 +86,22 @@ class CaffeinateTileService : TileService() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        println("We're being destroyed :(")
         timer.cancel()
         releaseWakelock()
+    }
+
+    fun logDestructionEvent() {
+        val bundle = Bundle()
+        bundle.putString("notification_enabled",
+                FirebaseRemoteConfig.getInstance().getBoolean("persistent_notification_for_tileservice").toString())
+        FirebaseAnalytics.getInstance(this).logEvent("service_destruction", bundle)
     }
 
     fun createWakelock() {
         if(config.getBoolean("persistent_notification_for_tileservice") ||
                 sharedPrefs.getBoolean("opt_into_notification_test", false)) {
-            startForeground(1, notification)
+            startForeground(101, notification)
         }
 
         wakeLock.acquire()
@@ -106,7 +121,7 @@ class CaffeinateTileService : TileService() {
 
         if(config.getBoolean("persistent_notification_for_tileservice") ||
                 sharedPrefs.getBoolean("opt_into_notification_test", false)) {
-            stopForeground(1)
+            stopForeground(Service.STOP_FOREGROUND_REMOVE)
         }
     }
 
