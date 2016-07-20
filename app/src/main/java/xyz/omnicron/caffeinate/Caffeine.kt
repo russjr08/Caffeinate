@@ -2,6 +2,7 @@ package xyz.omnicron.caffeinate
 
 import android.app.Application
 import android.service.quicksettings.Tile
+import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import java.util.*
@@ -12,7 +13,13 @@ import java.util.*
 class Caffeine: Application() {
 
     lateinit var tile: Tile
-    val config = FirebaseRemoteConfig.getInstance()
+    lateinit var config :FirebaseRemoteConfig
+
+    override fun onCreate() {
+        if (!FirebaseApp.getApps(this).isEmpty()) {
+            config = FirebaseRemoteConfig.getInstance()
+        }
+    }
 
     fun updateFirebaseRemoteConfigs() {
         updateFirebaseRemoteConfigs({})
