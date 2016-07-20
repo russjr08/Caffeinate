@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "166225556097-n3hllb23130q1gtb0vokirh8sh72prif.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.omnicron.caffeinate",
+            "certificate_hash": "6A951D10CCE2DFB1518E634340139150C8719D45"
+          }
+        },
+        {
           "client_id": "166225556097-93c4vh1u3j9mj50iqc28r67gtqjvnd1q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

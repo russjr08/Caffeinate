@@ -27,6 +27,7 @@ class CaffeinateTileService : TileService() {
             (application as Caffeine).tile = qsTile
             startService(service)
         } else {
+            qsTile.state = Tile.STATE_INACTIVE
             stopService(service)
         }
 

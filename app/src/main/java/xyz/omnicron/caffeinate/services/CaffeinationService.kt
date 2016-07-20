@@ -15,7 +15,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import xyz.omnicron.caffeinate.Caffeine
 import xyz.omnicron.caffeinate.R
-import java.util.*
 
 /**
  * @author russjr08
@@ -141,12 +140,7 @@ class CaffeinationService: Service() {
     }
 
     private fun setupNotificationTestDefaults() {
-        val defaults = HashMap<String, Any>()
-        defaults.put("persistent_notification_for_tileservice", false)
-
-        config.setDefaults(defaults)
-        config.fetch()
-        config.activateFetched()
+        (application as Caffeine).updateFirebaseRemoteConfigs()
     }
 
 

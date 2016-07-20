@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,12 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNotificationTestDefaults() {
-        val defaults = HashMap<String, String>()
-        defaults.put("persistent_notification_for_tileservice", "false")
-
-        FirebaseRemoteConfig.getInstance().setDefaults(defaults as Map<String, Any>?)
-        FirebaseRemoteConfig.getInstance().fetch()
-        FirebaseRemoteConfig.getInstance().activateFetched()
+        (application as Caffeine).updateFirebaseRemoteConfigs()
 
     }
 }
