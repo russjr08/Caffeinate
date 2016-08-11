@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.*
 import android.view.MenuItem
-import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics
 
 /**
@@ -64,8 +63,6 @@ class SettingsActivity : AppCompatPreferenceActivity() {
                 || GeneralPreferenceFragment::class.java.name == fragmentName
                 || CaffeinePreferenceFragment::class.java.name == fragmentName
     }
-
-
 
     /**
      * This fragment shows general preferences only. It is used when the
@@ -123,18 +120,12 @@ class SettingsActivity : AppCompatPreferenceActivity() {
 
 
         override fun onSharedPreferenceChanged(prefs: SharedPreferences, key: String) {
-            if(key == "caffeine_time_limit") {
-                Toast.makeText(context, "You'll need to re-toggle the tile in order for changes to take affect :)", Toast.LENGTH_LONG).show()
-            }
         }
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.pref_caffeine)
             setHasOptionsMenu(true)
-
-            PreferenceManager.getDefaultSharedPreferences(context)
-                    .registerOnSharedPreferenceChangeListener(this)
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
