@@ -50,7 +50,7 @@ class CaffeinationService: Service() {
 
         wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, WL_TAG)
 
-        timer = object: CountDownTimer(300000, 1000) {
+        timer = object: CountDownTimer(sharedPrefs.getString("caffeine_time_limit", "300000").toLong(), 1000) {
             override fun onFinish() {
                 releaseWakelock()
             }

@@ -7,5 +7,10 @@
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_general" />
 
+    <header
+        android:fragment="xyz.omnicron.caffeinate.SettingsActivity$CaffeinePreferenceFragment"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="@string/pref_header_caffeine" />
+
 
 </preference-headers>

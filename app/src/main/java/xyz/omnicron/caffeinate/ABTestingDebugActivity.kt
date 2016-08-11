@@ -15,7 +15,7 @@ class ABTestingDebugActivity : AppCompatActivity() {
         val textview = findViewById(R.id.editText) as TextView
 
         (application as Caffeine).updateFirebaseRemoteConfigs {
-            Toast.makeText(this@ABTestingDebugActivity, "Config values updated successfully", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@ABTestingDebugActivity, "Config values retrieved from server successfully", Toast.LENGTH_LONG).show()
             runOnUiThread { textview.text = "persistent_notification_for_tileservice: " + FirebaseRemoteConfig.getInstance().getBoolean("persistent_notification_for_tileservice").toString() }
         }
 

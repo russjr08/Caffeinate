@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="caffeine_time_limit"
+        android:title="@string/pref_caffeine_timelimit_title"
+        android:dialogTitle="@string/pref_caffeine_timelimit_title_extended"
+        android:entries="@array/pref_caffeine_timelimits"
+        android:entryValues="@array/pref_caffeine_timelimits_values"
+        android:defaultValue="300000" />
+
+
+</PreferenceScreen>
