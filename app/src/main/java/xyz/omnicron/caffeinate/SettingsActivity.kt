@@ -73,11 +73,13 @@ class SettingsActivity : AppCompatPreferenceActivity() {
 
 
         override fun onSharedPreferenceChanged(prefs: SharedPreferences, key: String) {
-            val analytics = FirebaseAnalytics.getInstance(context)
+            if(context != null) {
+                val analytics = FirebaseAnalytics.getInstance(context)
 
-            if(key.equals("opt_into_notification_test")) {
-                analytics.setUserProperty("opt_in_notification", prefs.getBoolean("opt_into_notification_test", false).toString())
-                // If user toggles this setting, register the change in analytics.
+                if (key.equals("opt_into_notification_test")) {
+                    analytics.setUserProperty("opt_in_notification", prefs.getBoolean("opt_into_notification_test", false).toString())
+                    // If user toggles this setting, register the change in analytics.
+                }
             }
         }
 

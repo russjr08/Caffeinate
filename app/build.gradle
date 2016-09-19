@@ -3,14 +3,14 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "xyz.omnicron.caffeinate"
         minSdkVersion 24
         targetSdkVersion 24
-        versionCode 9
-        versionName "1.6-beta"
+        versionCode 10
+        versionName "1.7-beta"
     }
     buildTypes {
         release {
