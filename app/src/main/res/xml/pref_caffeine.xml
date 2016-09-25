@@ -8,5 +8,12 @@
         android:entryValues="@array/pref_caffeine_timelimits_values"
         android:defaultValue="300000" />
 
+    <SwitchPreference
+        android:key="caffeine_screen_dimming"
+        android:title="@string/pref_caffeine_screen_dimming_title"
+        android:summary="@string/pref_caffeine_screen_dimming_title_extended"
+        android:defaultValue="false" />
+
+
 
 </PreferenceScreen>

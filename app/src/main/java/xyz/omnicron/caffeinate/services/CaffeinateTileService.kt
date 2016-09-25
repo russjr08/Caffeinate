@@ -21,9 +21,9 @@ class CaffeinateTileService : TileService() {
 
     override fun onClick() {
         super.onClick()
-        var service = Intent(this, CaffeinationService::class.java)
+        val service = Intent(this, CaffeinationService::class.java)
 
-        if(qsTile.state == Tile.STATE_INACTIVE) {
+        if(qsTile?.state == Tile.STATE_INACTIVE) {
             (application as Caffeine).tile = qsTile
             startService(service)
         } else {

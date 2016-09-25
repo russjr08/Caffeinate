@@ -79,4 +79,6 @@
     <string name="tile_sound_label">Sound Profile</string>
     <string name="pref_caffeine_timelimit_title">Screen Timeout Limit</string>
     <string name="pref_caffeine_timelimit_title_extended">Screen Timeout Limit</string>
+    <string name="pref_caffeine_screen_dimming_title">Allow screen to dim</string>
+    <string name="pref_caffeine_screen_dimming_title_extended">When enabled, screen brightness is heavily reduced after the built-in system\'s \"Screen Timeout\" setting.</string>
 </resources>

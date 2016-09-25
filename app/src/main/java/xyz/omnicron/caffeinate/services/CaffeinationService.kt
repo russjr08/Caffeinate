@@ -48,7 +48,11 @@ class CaffeinationService: Service() {
 
         setupNotificationTestDefaults()
 
-        wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, WL_TAG)
+        if(sharedPrefs.getBoolean("caffeine_screen_dimming", false)) {
+            wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, WL_TAG)
+        } else {
+            wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, WL_TAG)
+        }
 
         timer = object: CountDownTimer(sharedPrefs.getString("caffeine_time_limit", "300000").toLong(), 1000) {
             override fun onFinish() {
