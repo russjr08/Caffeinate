@@ -17,14 +17,22 @@
         android:src="@drawable/ic_extension_black_24dp"/>
 
     <TextView
-        android:gravity="center"
-        android:paddingBottom="45dp"
+    android:gravity="center"
+    android:paddingBottom="45dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="20sp"
+    android:textAppearance="?android:attr/textAppearance"
+    android:textAlignment="center"
+    android:text="@string/introduction_caffeinate" />
+
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:textAppearance="?android:attr/textAppearance"
         android:textAlignment="center"
-        android:text="Welcome! \n Caffeinate operates via your Quick Settings." />
+        android:text="@string/introduction_caffeinate_settings_hint" />
 
 
 </LinearLayout>

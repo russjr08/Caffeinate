@@ -77,8 +77,10 @@
     <string name="setting_summary_notificationtest">Force enable persistent notification (As an attempt to keep the tile running)</string>
     <string name="setting_title_notificationtest">Force Opt-In to Notification A/B test</string>
     <string name="tile_sound_label">Sound Profile</string>
-    <string name="pref_caffeine_timelimit_title">Screen Timeout Limit</string>
-    <string name="pref_caffeine_timelimit_title_extended">Screen Timeout Limit</string>
+    <string name="pref_caffeine_timelimit_title">Default Screen Timeout</string>
+    <string name="pref_caffeine_timelimit_title_extended">Default Screen Timeout</string>
     <string name="pref_caffeine_screen_dimming_title">Allow screen to dim</string>
     <string name="pref_caffeine_screen_dimming_title_extended">When enabled, screen brightness is heavily reduced after the built-in system\'s \"Screen Timeout\" setting.</string>
+    <string name="introduction_caffeinate">Welcome! \n Caffeinate operates via your Quick Settings.</string>
+    <string name="introduction_caffeinate_settings_hint">Caffeinate also has it\'s own settings! Click the menu button above to take a peek.</string>
 </resources>

@@ -1,10 +1,14 @@
 package xyz.omnicron.caffeinate
 
 import android.app.Application
+import android.content.ComponentName
+import android.content.ServiceConnection
+import android.os.IBinder
 import android.service.quicksettings.Tile
 import com.google.firebase.FirebaseApp
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import xyz.omnicron.caffeinate.services.CaffeinationService
 import java.util.*
 
 /**
@@ -13,7 +17,9 @@ import java.util.*
 class Caffeine: Application() {
 
     lateinit var tile: Tile
-    lateinit var config :FirebaseRemoteConfig
+    lateinit var config: FirebaseRemoteConfig
+
+    var caffeinationService: CaffeinationService? = null
 
     override fun onCreate() {
         if (!FirebaseApp.getApps(this).isEmpty()) {
@@ -50,6 +56,18 @@ class Caffeine: Application() {
                 }
             }
         }
+    }
+
+    var connection: ServiceConnection? = object: ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            var binder = service as CaffeinationService.LocalBinder
+            caffeinationService = binder.getService()
+        }
+
     }
 
 }
