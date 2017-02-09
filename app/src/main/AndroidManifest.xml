@@ -15,11 +15,13 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <receiver android:name=".ActionReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="xyz.omnicron.caffeinate.STOP_ACTION" />
+            </intent-filter>
+        </receiver>
         <service
             android:name=".services.CaffeinateTileService"
             android:icon="@drawable/ic_tile_icon_24dp"

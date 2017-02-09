@@ -1,6 +1,7 @@
 package xyz.omnicron.caffeinate.services
 
 import android.app.Notification
+import android.app.PendingIntent
 import android.app.Service
 import android.content.*
 import android.os.*
@@ -10,7 +11,9 @@ import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import xyz.omnicron.caffeinate.Caffeine
+import xyz.omnicron.caffeinate.MainActivity
 import xyz.omnicron.caffeinate.R
+import java.util.concurrent.TimeUnit
 
 /**
  * @author russjr08
@@ -71,12 +74,19 @@ class CaffeinationService: Service() {
             wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, WL_TAG)
         }
 
+        val stopIntent = Intent()
+        stopIntent.action = "xyz.omnicron.caffeinate.STOP_ACTION"
+        val launcherIntent = Intent(this, MainActivity::class.java)
+        val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         notification = Notification.Builder(applicationContext)
-                .setContentTitle("Caffeinating...")
+                .setContentTitle("Caffeination in progress...")
                 .setContentText(getString(R.string.caffeination_in_progress))
                 .setSmallIcon(R.drawable.ic_tile_icon_24dp)
-                .setPriority(Notification.PRIORITY_LOW)
+                .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                .setPriority(Notification.PRIORITY_MAX)
+                .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
+                .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
                 .build()
 
         startTimer()
@@ -133,17 +143,28 @@ class CaffeinationService: Service() {
     }
 
     private fun timeConversion(remains: Long): String {
-        val MINUTES_IN_AN_HOUR = 60
-        val SECONDS_IN_A_MINUTE = 60
+        var timeRemaining = remains
 
-        var seconds = remains / 1000
-        var minutes = seconds / SECONDS_IN_A_MINUTE
+        val days = TimeUnit.MILLISECONDS
+                .toDays(remains)
+        timeRemaining -= TimeUnit.DAYS.toMillis(days)
 
-        seconds -= minutes * SECONDS_IN_A_MINUTE
-        val hours = minutes / MINUTES_IN_AN_HOUR
-        minutes -= hours * MINUTES_IN_AN_HOUR
+        val hours = TimeUnit.MILLISECONDS
+                .toHours(timeRemaining)
+        timeRemaining -= TimeUnit.HOURS.toMillis(hours)
 
-        return String.format("%s:%s", minutes, seconds)
+        val minutes = TimeUnit.MILLISECONDS
+                .toMinutes(timeRemaining)
+        timeRemaining -= TimeUnit.MINUTES.toMillis(minutes)
+
+        val seconds = TimeUnit.MILLISECONDS
+                .toSeconds(timeRemaining)
+
+        var strSeconds = seconds.toString()
+        if(seconds < 10) {
+            strSeconds = String.format("0%s", strSeconds)
+        }
+        return String.format("%s:%s", minutes, strSeconds)
     }
 
 
