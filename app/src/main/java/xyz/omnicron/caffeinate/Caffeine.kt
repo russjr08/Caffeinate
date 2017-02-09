@@ -70,4 +70,18 @@ class Caffeine: Application() {
 
     }
 
+    fun initializeServiceConnection() {
+        connection = object: ServiceConnection {
+            override fun onServiceDisconnected(name: ComponentName?) {
+
+            }
+
+            override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+                var binder = service as CaffeinationService.LocalBinder
+                caffeinationService = binder.getService()
+            }
+
+        }
+    }
+
 }

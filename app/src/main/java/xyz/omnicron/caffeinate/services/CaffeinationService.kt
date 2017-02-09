@@ -72,7 +72,6 @@ class CaffeinationService: Service() {
         }
 
 
-
         notification = Notification.Builder(applicationContext)
                 .setContentTitle("Caffeinating...")
                 .setContentText(getString(R.string.caffeination_in_progress))
@@ -98,9 +97,9 @@ class CaffeinationService: Service() {
             }
 
             override fun onTick(remains: Long) {
-                tile.label = timeConversion(remains)
+                tile?.label = timeConversion(remains)
                 timeLeft = remains;
-                tile.updateTile()
+                tile?.updateTile()
             }
 
         }
@@ -111,8 +110,8 @@ class CaffeinationService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        tile.state = Tile.STATE_ACTIVE
-        tile.updateTile()
+        tile?.state = Tile.STATE_ACTIVE
+        tile?.updateTile()
         createWakelock()
         return START_NOT_STICKY
     }
@@ -124,13 +123,13 @@ class CaffeinationService: Service() {
         timer?.cancel()
         releaseWakelock()
 
-        tile.state = Tile.STATE_INACTIVE
-        tile.updateTile()
+        tile?.state = Tile.STATE_INACTIVE
+        tile?.updateTile()
 
 //        if((application as Caffeine).connection != null) {
 //            unbindService((application as Caffeine).connection)
 //        }
-        (application as Caffeine).connection = null
+        (application as Caffeine).initializeServiceConnection()
     }
 
     private fun timeConversion(remains: Long): String {

@@ -5,7 +5,7 @@
     <string name="soundprofile_tile_label_vibrate">Vibrate</string>
     <string name="soundprofile_tile_label_ringer">Normal</string>
 
-    <string name="caffeination_in_progress">Caffeinate is running, your display will stay active in the meantime…</string>
+    <string name="caffeination_in_progress">Caffeinate is running, lock your screen to cancel.</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
