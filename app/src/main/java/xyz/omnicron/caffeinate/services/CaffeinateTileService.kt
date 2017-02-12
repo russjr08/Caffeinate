@@ -36,8 +36,8 @@ class CaffeinateTileService : TileService() {
 //            qsTile.state = Tile.STATE_INACTIVE
 //            unbindService(caffeine.connection)
             if(caffeine.caffeinationService == null) {
-                qsTile.state = Tile.STATE_INACTIVE
-                qsTile.updateTile()
+                qsTile?.state = Tile.STATE_INACTIVE
+                qsTile?.updateTile()
             }
             caffeine.caffeinationService?.increaseTimer(300000)
         }

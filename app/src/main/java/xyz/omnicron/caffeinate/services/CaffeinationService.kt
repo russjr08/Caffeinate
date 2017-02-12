@@ -62,7 +62,7 @@ class CaffeinationService: Service() {
 
         receiver = object: BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                releaseWakelock()
+                releaseWakelock("screen_off")
             }
 
         }
@@ -103,7 +103,7 @@ class CaffeinationService: Service() {
         timer?.cancel()
         timer = object: CountDownTimer(time, 1000) {
             override fun onFinish() {
-                releaseWakelock()
+                releaseWakelock("timer_expired")
             }
 
             override fun onTick(remains: Long) {
@@ -187,7 +187,7 @@ class CaffeinationService: Service() {
         startTimer()
     }
 
-    fun releaseWakelock() {
+    fun releaseWakelock(reason: String = "unknown") {
         tile?.state = Tile.STATE_INACTIVE
         tile?.label = getString(R.string.caffeinate_tile_label)
         tile?.updateTile()
@@ -198,9 +198,11 @@ class CaffeinationService: Service() {
 
         timer?.cancel()
 
-        if(config.getBoolean("persistent_notification_for_tileservice") ||
-                sharedPrefs.getBoolean("opt_into_notification_test", false)) {
-        }
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "stop_caffeination")
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, reason)
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
         stopForeground(Service.STOP_FOREGROUND_REMOVE)
         stopSelf()
 

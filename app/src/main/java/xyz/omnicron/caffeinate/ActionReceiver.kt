@@ -13,7 +13,7 @@ class ActionReceiver: BroadcastReceiver() {
         val action = intent.action
 
         if("xyz.omnicron.caffeinate.STOP_ACTION".equals(action)) {
-            (ctx?.applicationContext as Caffeine).caffeinationService?.releaseWakelock()
+            (ctx?.applicationContext as Caffeine).caffeinationService?.releaseWakelock("cancel_notification")
         }
     }
 
