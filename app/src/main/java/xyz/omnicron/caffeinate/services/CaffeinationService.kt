@@ -1,8 +1,6 @@
 package xyz.omnicron.caffeinate.services
 
-import android.app.Notification
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.*
 import android.os.*
 import android.preference.PreferenceManager
@@ -10,6 +8,7 @@ import android.service.quicksettings.Tile
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import xyz.omnicron.caffeinate.ActionReceiver
 import xyz.omnicron.caffeinate.Caffeine
 import xyz.omnicron.caffeinate.MainActivity
 import xyz.omnicron.caffeinate.R
@@ -32,8 +31,13 @@ class CaffeinationService: Service() {
     var receiver: BroadcastReceiver? = null
     var timeLeft: Long = 0L
 
+    var infiniteMode = false;
+
 
     val WL_TAG = "Caffeinate"
+
+    val NOTIFICATION_CHANNEL_ID = "caffeination"
+    val NOTIFICATION_CHANNEL_TEXT = "Caffeination"
 
     inner class LocalBinder: Binder() {
         fun getService(): CaffeinationService {
@@ -79,15 +83,34 @@ class CaffeinationService: Service() {
         val launcherIntent = Intent(this, MainActivity::class.java)
         val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        notification = Notification.Builder(applicationContext)
-                .setContentTitle("Caffeination in progress...")
-                .setContentText(getString(R.string.caffeination_in_progress))
-                .setSmallIcon(R.drawable.ic_tile_icon_24dp)
-                .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
-                .setPriority(Notification.PRIORITY_MAX)
-                .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
-                .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
-                .build()
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        registerReceiver(ActionReceiver(), IntentFilter(stopIntent.action))
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_TEXT, NotificationManager.IMPORTANCE_MIN)
+            notificationManager.createNotificationChannel(notificationChannel)
+            notification = Notification.Builder(applicationContext)
+                    .setContentTitle("Caffeination in progress...")
+                    .setContentText(getString(R.string.caffeination_in_progress))
+                    .setSmallIcon(R.drawable.ic_tile_icon_24dp)
+                    .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
+                    .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
+                    .setChannelId(NOTIFICATION_CHANNEL_ID)
+                    .build()
+        } else {
+            notification = Notification.Builder(applicationContext)
+                    .setContentTitle("Caffeination in progress...")
+                    .setContentText(getString(R.string.caffeination_in_progress))
+                    .setSmallIcon(R.drawable.ic_tile_icon_24dp)
+                    .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
+                    .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
+                    .build()
+        }
 
         startTimer()
 
@@ -95,7 +118,16 @@ class CaffeinationService: Service() {
 
     fun increaseTimer(increaseBy: Long) {
         timer?.cancel()
-        startTimer(timeLeft + increaseBy)
+        val newTime = timeLeft + increaseBy
+
+        if(newTime > 3600000) { // 1 hour
+            infiniteMode = true
+            tile.label = "∞"
+            tile.updateTile()
+            startForeground(50, notification)
+        } else {
+            startTimer(newTime)
+        }
     }
 
     fun startTimer(time: Long = sharedPrefs.getString("caffeine_time_limit", "300000").toLong()) {
@@ -136,9 +168,10 @@ class CaffeinationService: Service() {
         tile?.state = Tile.STATE_INACTIVE
         tile?.updateTile()
 
-//        if((application as Caffeine).connection != null) {
-//            unbindService((application as Caffeine).connection)
-//        }
+        if((application as Caffeine).bound && (application as Caffeine).connection != null) {
+            applicationContext.unbindService((application as Caffeine).connection)
+            (application as Caffeine).bound = false
+        }
         (application as Caffeine).initializeServiceConnection()
     }
 
@@ -194,6 +227,10 @@ class CaffeinationService: Service() {
 
         if(wakeLock.isHeld) {
             wakeLock.release()
+        }
+
+        if(infiniteMode) {
+            infiniteMode = false
         }
 
         timer?.cancel()

@@ -1,9 +1,9 @@
 package xyz.omnicron.caffeinate.services
 
+import android.app.NotificationManager
 import android.content.Context
 import android.graphics.drawable.Icon
 import android.media.AudioManager
-import android.os.Build
 import android.provider.Settings
 import android.service.quicksettings.TileService
 import xyz.omnicron.caffeinate.R
@@ -51,15 +51,17 @@ class SoundProfileTileService : TileService() {
 
     // https://stackoverflow.com/questions/31387137/android-detect-do-not-disturb-status
     fun isPhoneInDoNotDisturb() : Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            try {
-                val mode = Settings.Global.getInt(contentResolver, "zen_mode")
-                return mode != 0
-            } catch (e: Settings.SettingNotFoundException) {
-                return false
-            }
+
+        val notificationManager: NotificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if(!notificationManager.isNotificationPolicyAccessGranted) {
+            return true
         }
-        return false;
+        try {
+            val mode = Settings.Global.getInt(contentResolver, "zen_mode")
+            return mode != 0
+        } catch (e: Settings.SettingNotFoundException) {
+            return false
+        }
     }
 
 }

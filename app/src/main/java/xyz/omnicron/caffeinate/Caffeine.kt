@@ -20,11 +20,13 @@ class Caffeine: Application() {
     lateinit var config: FirebaseRemoteConfig
 
     var caffeinationService: CaffeinationService? = null
+    var bound = false
 
     override fun onCreate() {
         if (!FirebaseApp.getApps(this).isEmpty()) {
             config = FirebaseRemoteConfig.getInstance()
         }
+        super.onCreate()
     }
 
     fun updateFirebaseRemoteConfigs() {
@@ -60,12 +62,13 @@ class Caffeine: Application() {
 
     var connection: ServiceConnection? = object: ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
-
+            bound = false
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             var binder = service as CaffeinationService.LocalBinder
             caffeinationService = binder.getService()
+            bound = true
         }
 
     }
@@ -73,12 +76,13 @@ class Caffeine: Application() {
     fun initializeServiceConnection() {
         connection = object: ServiceConnection {
             override fun onServiceDisconnected(name: ComponentName?) {
-
+                bound = false
             }
 
             override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
                 var binder = service as CaffeinationService.LocalBinder
                 caffeinationService = binder.getService()
+                bound = true
             }
 
         }

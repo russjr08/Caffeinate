@@ -39,7 +39,12 @@ class CaffeinateTileService : TileService() {
                 qsTile?.state = Tile.STATE_INACTIVE
                 qsTile?.updateTile()
             }
-            caffeine.caffeinationService?.increaseTimer(300000)
+
+            if(caffeine.caffeinationService != null && caffeine.caffeinationService?.infiniteMode!!) {
+                caffeine.caffeinationService?.releaseWakelock("user_cancelled")
+            } else {
+                caffeine.caffeinationService?.increaseTimer(300000)
+            }
         }
 
         qsTile.updateTile()

@@ -12,7 +12,9 @@ class ABTestingDebugActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_abtesting_debug)
 
-        val textview = findViewById(R.id.editText) as TextView
+        val textview = findViewById<TextView>(R.id.editText)
+
+
 
         (application as Caffeine).updateFirebaseRemoteConfigs {
             Toast.makeText(this@ABTestingDebugActivity, "Config values retrieved from server successfully", Toast.LENGTH_LONG).show()
