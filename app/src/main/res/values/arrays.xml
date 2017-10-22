@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pref_caffeine_timelimits">
+        <item>30 Seconds</item>
         <item>5 Minutes</item>
         <item>10 Minutes</item>
         <item>15 Minutes</item>
@@ -9,6 +10,7 @@
         <item>60 Minutes</item>
     </string-array>
     <string-array name="pref_caffeine_timelimits_values">
+        <item>30000</item>
         <item>300000</item>
         <item>600000</item>
         <item>900000</item>

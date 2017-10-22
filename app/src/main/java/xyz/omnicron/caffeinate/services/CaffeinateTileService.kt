@@ -33,17 +33,17 @@ class CaffeinateTileService : TileService() {
             qsTile.state = Tile.STATE_ACTIVE
             qsTile.updateTile()
         } else {
-//            qsTile.state = Tile.STATE_INACTIVE
-//            unbindService(caffeine.connection)
             if(caffeine.caffeinationService == null) {
                 qsTile?.state = Tile.STATE_INACTIVE
                 qsTile?.updateTile()
             }
 
-            if(caffeine.caffeinationService != null && caffeine.caffeinationService?.infiniteMode!!) {
-                caffeine.caffeinationService?.releaseWakelock("user_cancelled")
-            } else {
-                caffeine.caffeinationService?.increaseTimer(300000)
+            if(caffeine.caffeinationService != null) {
+                if (caffeine.caffeinationService?.infiniteMode!!) {
+                    caffeine.caffeinationService?.releaseWakelock("user_cancelled")
+                } else {
+                    caffeine.caffeinationService?.increaseTimer(300000) // 5 minutes
+                }
             }
         }
 

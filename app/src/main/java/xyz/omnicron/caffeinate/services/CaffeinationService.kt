@@ -19,25 +19,25 @@ import java.util.concurrent.TimeUnit
  */
 class CaffeinationService: Service() {
 
-    lateinit var wakeLock: PowerManager.WakeLock
-    var timer: CountDownTimer? = null
-    lateinit var notification: Notification
-    val config: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-    lateinit var sharedPrefs: SharedPreferences
+    private lateinit var wakeLock: PowerManager.WakeLock
+    private var timer: CountDownTimer? = null
+    private lateinit var notification: Notification
+    private val config: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+    private lateinit var sharedPrefs: SharedPreferences
 
-    lateinit var tile: Tile
+    var tile: Tile? = null
 
-    var mBinder = LocalBinder()
-    var receiver: BroadcastReceiver? = null
+    private var mBinder = LocalBinder()
+    private var receiver: BroadcastReceiver? = null
     var timeLeft: Long = 0L
 
-    var infiniteMode = false;
+    var infiniteMode = false
 
 
     val WL_TAG = "Caffeinate"
 
-    val NOTIFICATION_CHANNEL_ID = "caffeination"
-    val NOTIFICATION_CHANNEL_TEXT = "Caffeination"
+    private val NOTIFICATION_CHANNEL_ID = "caffeination"
+    private val NOTIFICATION_CHANNEL_TEXT = "Caffeination"
 
     inner class LocalBinder: Binder() {
         fun getService(): CaffeinationService {
@@ -122,8 +122,8 @@ class CaffeinationService: Service() {
 
         if(newTime > 3600000) { // 1 hour
             infiniteMode = true
-            tile.label = "∞"
-            tile.updateTile()
+            tile?.label = "∞"
+            tile?.updateTile()
             startForeground(50, notification)
         } else {
             startTimer(newTime)
@@ -140,7 +140,8 @@ class CaffeinationService: Service() {
 
             override fun onTick(remains: Long) {
                 tile?.label = timeConversion(remains)
-                timeLeft = remains;
+                tile?.state = Tile.STATE_ACTIVE
+                timeLeft = remains
                 tile?.updateTile()
             }
 
@@ -148,6 +149,14 @@ class CaffeinationService: Service() {
 
         timer?.start()
 
+        val launcherIconUserProp = if(sharedPrefs.getBoolean("show_launcher_icon", true)) {
+            "No"
+        } else {
+            "Yes"
+        }
+        val analytics = FirebaseAnalytics.getInstance(this.applicationContext)
+        analytics.setUserProperty("hides_launcher_icon", launcherIconUserProp)
+        analytics.setUserProperty("screen_timeout_option", sharedPrefs.getString("caffeine_time_limit", "300000"))
         startForeground(50, notification)
     }
 
@@ -173,6 +182,14 @@ class CaffeinationService: Service() {
             (application as Caffeine).bound = false
         }
         (application as Caffeine).initializeServiceConnection()
+    }
+
+    fun resetState() {
+        timer?.cancel()
+        tile?.state = Tile.STATE_INACTIVE
+        tile?.label = resources.getString(R.string.caffeinate_tile_label)
+        infiniteMode = false
+        tile?.updateTile()
     }
 
     private fun timeConversion(remains: Long): String {
@@ -221,22 +238,15 @@ class CaffeinationService: Service() {
     }
 
     fun releaseWakelock(reason: String = "unknown") {
-        tile?.state = Tile.STATE_INACTIVE
-        tile?.label = getString(R.string.caffeinate_tile_label)
-        tile?.updateTile()
-
         if(wakeLock.isHeld) {
             wakeLock.release()
         }
 
-        if(infiniteMode) {
-            infiniteMode = false
-        }
-
-        timer?.cancel()
+        resetState()
 
         val bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "stop_caffeination")
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Caffeination End")
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, reason)
         FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
 

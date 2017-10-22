@@ -84,17 +84,22 @@ class SettingsActivity : AppCompatPreferenceActivity() {
                     // If user toggles this setting, register the change in analytics.
                 }
 
+                if (key == "caffeine_time_limit") {
+                    analytics.setUserProperty("screen_timeout_option", prefs.getLong("caffeine_time_limit", 300000).toString())
+                }
+
                 if (key == "show_launcher_icon") {
                     val packageManager = activity.packageManager
-                    if (prefs.getBoolean("show_launcher_icon", false)) {
+                    if (prefs.getBoolean("show_launcher_icon", true)) {
                         packageManager.setComponentEnabledSetting(ComponentName(context, MainActivity::class.java),
                                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
                         Toast.makeText(this.context, "Launcher icon enabled!", Toast.LENGTH_SHORT).show()
+                        analytics.setUserProperty("hides_launcher_icon", "No")
                     } else {
                         packageManager.setComponentEnabledSetting(ComponentName(context, MainActivity::class.java),
                                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
                         Toast.makeText(this.context, "Launcher icon disabled (may not hide until reboot)! WARNING: To get back into settings, tap the caffeination notification.", Toast.LENGTH_LONG).show()
-
+                        analytics.setUserProperty("hides_launcher_icon", "Yes")
                     }
 
                 }
