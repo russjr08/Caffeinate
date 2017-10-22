@@ -2,15 +2,18 @@ package xyz.omnicron.caffeinate
 
 
 import android.annotation.TargetApi
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.preference.*
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics
 
 /**
@@ -76,9 +79,24 @@ class SettingsActivity : AppCompatPreferenceActivity() {
             if(context != null) {
                 val analytics = FirebaseAnalytics.getInstance(context)
 
-                if (key.equals("opt_into_notification_test")) {
+                if (key == "opt_into_notification_test") {
                     analytics.setUserProperty("opt_in_notification", prefs.getBoolean("opt_into_notification_test", false).toString())
                     // If user toggles this setting, register the change in analytics.
+                }
+
+                if (key == "show_launcher_icon") {
+                    val packageManager = activity.packageManager
+                    if (prefs.getBoolean("show_launcher_icon", false)) {
+                        packageManager.setComponentEnabledSetting(ComponentName(context, MainActivity::class.java),
+                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
+                        Toast.makeText(this.context, "Launcher icon enabled!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        packageManager.setComponentEnabledSetting(ComponentName(context, MainActivity::class.java),
+                                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
+                        Toast.makeText(this.context, "Launcher icon disabled (may not hide until reboot)! WARNING: To get back into settings, tap the caffeination notification.", Toast.LENGTH_LONG).show()
+
+                    }
+
                 }
             }
         }

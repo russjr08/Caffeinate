@@ -24,4 +24,5 @@
     <string name="pref_caffeine_screen_dimming_title_extended">When enabled, screen brightness is heavily reduced after the built-in system\'s \"Screen Timeout\" setting.</string>
     <string name="introduction_caffeinate">Welcome! \n Caffeinate operates via your Quick Settings.</string>
     <string name="introduction_caffeinate_settings_hint">Caffeinate also has its own settings! Click the menu button above to take a peek.</string>
+    <string name="summary_launcher_icon_warning">Warning: Turning this off will make it impossible to launch the app from your home screen/Play Store.\n\nYou will need to start Caffeinating, and then click the notification to return here.</string>
 </resources>

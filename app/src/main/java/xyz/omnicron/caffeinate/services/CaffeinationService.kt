@@ -10,8 +10,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import xyz.omnicron.caffeinate.ActionReceiver
 import xyz.omnicron.caffeinate.Caffeine
-import xyz.omnicron.caffeinate.MainActivity
 import xyz.omnicron.caffeinate.R
+import xyz.omnicron.caffeinate.SettingsActivity
 import java.util.concurrent.TimeUnit
 
 /**
@@ -80,7 +80,7 @@ class CaffeinationService: Service() {
 
         val stopIntent = Intent()
         stopIntent.action = "xyz.omnicron.caffeinate.STOP_ACTION"
-        val launcherIntent = Intent(this, MainActivity::class.java)
+        val launcherIntent = Intent(this, SettingsActivity::class.java)
         val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

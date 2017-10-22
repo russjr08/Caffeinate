@@ -9,8 +9,8 @@ android {
         applicationId "xyz.omnicron.caffeinate"
         minSdkVersion 24
         targetSdkVersion 26
-        versionCode 17
-        versionName "3.2-beta"
+        versionCode 18
+        versionName "3.2.1-beta"
     }
     buildTypes {
         release {

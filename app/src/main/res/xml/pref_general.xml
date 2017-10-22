@@ -12,4 +12,10 @@
         <intent android:action="xyz.omnicron.caffeinate.ABTestingDebugActivity"/>
     </Preference>
 
+    <SwitchPreference
+        android:key="show_launcher_icon"
+        android:defaultValue="true"
+        android:summary="@string/summary_launcher_icon_warning"
+        android:title="Show Launcher Icon" />
+
 </PreferenceScreen>

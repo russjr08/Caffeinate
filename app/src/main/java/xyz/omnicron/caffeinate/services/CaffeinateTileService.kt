@@ -29,7 +29,7 @@ class CaffeinateTileService : TileService() {
             caffeine.tile = qsTile
             startService(service)
             caffeine.initializeServiceConnection()
-            bindService(service, caffeine.connection, Context.BIND_AUTO_CREATE)
+            applicationContext.bindService(service, caffeine.connection, Context.BIND_AUTO_CREATE)
             qsTile.state = Tile.STATE_ACTIVE
             qsTile.updateTile()
         } else {
