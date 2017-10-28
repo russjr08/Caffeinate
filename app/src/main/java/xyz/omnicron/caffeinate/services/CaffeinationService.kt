@@ -126,6 +126,8 @@ class CaffeinationService: Service() {
             tile?.updateTile()
             startForeground(50, notification)
         } else {
+            tile?.label = timeConversion(newTime)
+            tile?.updateTile()
             startTimer(newTime)
         }
     }
@@ -174,8 +176,7 @@ class CaffeinationService: Service() {
         timer?.cancel()
         releaseWakelock()
 
-        tile?.state = Tile.STATE_INACTIVE
-        tile?.updateTile()
+        resetState()
 
         if((application as Caffeine).bound && (application as Caffeine).connection != null) {
             applicationContext.unbindService((application as Caffeine).connection)
@@ -189,7 +190,15 @@ class CaffeinationService: Service() {
         tile?.state = Tile.STATE_INACTIVE
         tile?.label = resources.getString(R.string.caffeinate_tile_label)
         infiniteMode = false
+        timeLeft = 0
         tile?.updateTile()
+
+        if((application as Caffeine).bound && (application as Caffeine).connection != null) {
+            applicationContext.unbindService((application as Caffeine).connection)
+            (application as Caffeine).bound = false
+        }
+        (application as Caffeine).initializeServiceConnection()
+
     }
 
     private fun timeConversion(remains: Long): String {
