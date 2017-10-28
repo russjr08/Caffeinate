@@ -6,6 +6,15 @@
         android:dialogTitle="@string/pref_caffeine_timelimit_title_extended"
         android:entries="@array/pref_caffeine_timelimits"
         android:entryValues="@array/pref_caffeine_timelimits_values"
+        android:summary="@string/pref_caffeine_time_limit"
+        android:defaultValue="300000" />
+
+    <EditTextPreference
+        android:key="caffeine_timer_increment"
+        android:title="Timer Increment Value"
+        android:summary="Sets how long tapping the Caffeine tile will increase the timer by (specified in seconds, default is 5 minutes)."
+        android:dialogMessage="Enter increment value in seconds"
+        android:inputType="number"
         android:defaultValue="300000" />
 
     <SwitchPreference

@@ -3,6 +3,7 @@ package xyz.omnicron.caffeinate.services
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import xyz.omnicron.caffeinate.Caffeine
@@ -40,7 +41,13 @@ class CaffeinateTileService : TileService() {
                 if (caffeine.caffeinationService?.infiniteMode!!) {
                     caffeine.caffeinationService?.releaseWakelock("user_cancelled")
                 } else {
-                    caffeine.caffeinationService?.increaseTimer(300000) // 5 minutes
+                    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+                    var incrementByPrefValue = sharedPrefs.getString("caffeine_timer_increment",
+                            "300000").toLong() * 1000
+                    if(incrementByPrefValue <= 0) {
+                        incrementByPrefValue = 300000
+                    }
+                    caffeine.caffeinationService?.increaseTimer(incrementByPrefValue)
                 }
             }
         }

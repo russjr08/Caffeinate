@@ -25,6 +25,9 @@ class CaffeinationService: Service() {
     private val config: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
     private lateinit var sharedPrefs: SharedPreferences
 
+    private val stopActionReceiver = ActionReceiver()
+    private val stopIntent = Intent()
+
     var tile: Tile? = null
 
     private var mBinder = LocalBinder()
@@ -54,6 +57,8 @@ class CaffeinationService: Service() {
         Log.d("Caffeine", "Caffeination Service is now running.")
         setupNotificationTestDefaults()
 
+        stopIntent.action = "xyz.omnicron.caffeinate.STOP_ACTION"
+
         tile = (application as Caffeine).tile
 
         val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
@@ -78,14 +83,13 @@ class CaffeinationService: Service() {
             wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, WL_TAG)
         }
 
-        val stopIntent = Intent()
-        stopIntent.action = "xyz.omnicron.caffeinate.STOP_ACTION"
+
         val launcherIntent = Intent(this, SettingsActivity::class.java)
         val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        registerReceiver(ActionReceiver(), IntentFilter(stopIntent.action))
+        registerReceiver(stopActionReceiver, IntentFilter(stopIntent.action))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_TEXT, NotificationManager.IMPORTANCE_MIN)
@@ -170,9 +174,9 @@ class CaffeinationService: Service() {
     }
 
     override fun onDestroy() {
-        println("We're being destroyed :(")
         unregisterReceiver(receiver)
-//        logDestructionEvent()
+        unregisterReceiver(stopActionReceiver)
+        logDestructionEvent()
         timer?.cancel()
         releaseWakelock()
 
