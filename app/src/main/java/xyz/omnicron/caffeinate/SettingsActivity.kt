@@ -85,7 +85,7 @@ class SettingsActivity : AppCompatPreferenceActivity() {
                 }
 
                 if (key == "caffeine_time_limit") {
-                    analytics.setUserProperty("screen_timeout_option", prefs.getLong("caffeine_time_limit", 300000).toString())
+                    analytics.setUserProperty("screen_timeout_option", prefs.getString("caffeine_time_limit", "300000"))
                 }
 
                 if (key == "show_launcher_icon") {

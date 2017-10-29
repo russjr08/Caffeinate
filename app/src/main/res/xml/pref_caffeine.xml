@@ -10,12 +10,12 @@
         android:defaultValue="300000" />
 
     <EditTextPreference
-        android:key="caffeine_timer_increment"
+        android:key="caffeine_timer_increment_val"
         android:title="Timer Increment Value"
         android:summary="Sets how long tapping the Caffeine tile will increase the timer by (specified in seconds, default is 5 minutes)."
         android:dialogMessage="Enter increment value in seconds"
         android:inputType="number"
-        android:defaultValue="300000" />
+        android:defaultValue="300" />
 
     <SwitchPreference
         android:key="caffeine_screen_dimming"

@@ -42,8 +42,8 @@ class CaffeinateTileService : TileService() {
                     caffeine.caffeinationService?.releaseWakelock("user_cancelled")
                 } else {
                     val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
-                    var incrementByPrefValue = sharedPrefs.getString("caffeine_timer_increment",
-                            "300000").toLong() * 1000
+                    var incrementByPrefValue = sharedPrefs.getString("caffeine_timer_increment_val",
+                            "300").toLong() * 1000
                     if(incrementByPrefValue <= 0) {
                         incrementByPrefValue = 300000
                     }
