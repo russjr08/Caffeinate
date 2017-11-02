@@ -59,7 +59,7 @@ class CaffeinateTileService : TileService() {
         super.onTileAdded()
         qsTile?.state = Tile.STATE_INACTIVE
         qsTile?.label = resources.getString(R.string.caffeinate_tile_label)
-        qsTile.updateTile()
+        qsTile?.updateTile()
     }
 
     override fun onTileRemoved() {
