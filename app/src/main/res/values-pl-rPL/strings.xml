@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"Caffeinate"</string>
+    <string name="caffeinate_tile_label">"Caffeinate"</string>
+    <string name="soundprofile_tile_label_vibrate">"Wibracje"</string>
+    <string name="soundprofile_tile_label_ringer">"Normalny"</string>
+    <string name="sound_dialog_dnd_error_title">"Uwaga: Tryb Nie przeszkadzać jest aktywny"</string>
+    <string name="sound_dialog_dnd_error_message">"Ponieważ status Nie przeszkadzać jest aktywny, tryb dźwięku nie może być aktualnie zmieniony. Wyłącz Tryb Nie przeszkadzać i spróbuj ponownie.
+
+Możesz także przyznać Caffeinate uprawnienie na zmianę statusu Nie przeszkadzać, klikając \"Przyznaj uprawnienie\" "</string>
+    <string name="caffeination_in_progress">"Caffeinate działa w tle, twój wyświetlacz pozostanie aktywny dopóki licznik nie dojdzie do zera. Dotknij, aby przejść do ustawień. "</string>
+    <string name="title_activity_settings">"Ustawienia"</string>
+
+    <!-- Strings related to Settings
+     Preference Header Strings -->
+    <string name="pref_header_general">"Ogólne"</string>
+    <string name="pref_header_caffeine">"Kafelek Caffeine"</string>
+    <string name="menu_entry_settings">"Ustawienia"</string>
+    <string name="setting_summary_notificationtest">"Wymuś trwałe powiadomienie (jako próba utrzymania aplikacji w tle) "</string>
+    <string name="setting_title_notificationtest">"Wymuś akceptację dla Testu powiadomienia A/B"</string>
+    <string name="tile_sound_label">"Profil Dźwięku"</string>
+    <string name="pref_caffeine_timelimit_title">"Domyślny czas uśpienia ekranu"</string>
+    <string name="pref_caffeine_timelimit_title_extended">"Domyślny czas uśpienia ekranu"</string>
+    <string name="pref_caffeine_screen_dimming_title">"Pozwól na przyciemnienie się wyświetlacza"</string>
+    <string name="pref_caffeine_screen_dimming_title_extended">"Po włączeniu jasność ekranu jest znacznie zredukowana po wbudowanym \"Czasie uśpienia ekranu\". "</string>
+    <string name="introduction_caffeinate">"Witaj!
+Caffeinate działa przez twoje Szybkie Ustawienia. "</string>
+    <string name="introduction_caffeinate_settings_hint">"Caffeinate ma także własne ustawienia! Dotknij przycisku menu powyżej, aby zajrzeć. "</string>
+    <string name="summary_launcher_icon_warning">"Uwaga: Wyłączenie spowoduje utratę możliwości otwarcia tej aplikacji z ekranu głównego lub Sklepu Play.
+
+Jedyną opcją będzie uruchomienie Kofeinacji, a następnie dotknięcie powiadomienia, aby powrócić. "</string>
+    <string name="caffeinate_tile_reset_state_hint">"Wskazówka: Jeśli Caffeinate zatrzyma się, spróbuj usunięcie kafelka z Szybkich Ustawień, a następnie dodanie ponownie, w celu zresetowania! "</string>
+    <string name="pref_caffeine_time_limit">"Określa czas, od którego rozpocznie się proces Kofeinacji. "</string>
+</resources>
