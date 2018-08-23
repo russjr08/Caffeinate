@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"Caffeinate"</string>
+    <string name="caffeinate_tile_label">"Caffeinate"</string>
+    <string name="soundprofile_tile_label_vibrate">"Вибрация"</string>
+    <string name="soundprofile_tile_label_ringer">"Нормальный"</string>
+    <string name="sound_dialog_dnd_error_title">"Внимание: DND активирован!"</string>
+    <string name="sound_dialog_dnd_error_message">"Поскольку DND активен, ваше звуковое состояние не может быть изменено в данный момент. Отключите режим DND и повторите попытку.
+
+Вы также можете предоставить Caffeinate разрешение на изменение состояния DND, нажав кнопку \"Предоставить Разрешение\"."</string>
+    <string name="caffeination_in_progress">"Caffeinate работает, ваш дисплей будет оставаться активным, пока Таймер не достигнет нуля. Нажмите, чтобы посетить настройки."</string>
+    <string name="title_activity_settings">"Настройки"</string>
+
+    <!-- Strings related to Settings
+     Preference Header Strings -->
+    <string name="pref_header_general">"Общие"</string>
+    <string name="pref_header_caffeine">"Настройка взаимодействия"</string>
+    <string name="menu_entry_settings">"Настройки"</string>
+    <string name="setting_summary_notificationtest">"Принудительное включение постоянного уведомления (как попытка сохранить работоспособность приложения)
+"</string>
+    <string name="setting_title_notificationtest">"Принудительное включение тестового уведомления A/B"</string>
+    <string name="tile_sound_label">"Режим звука"</string>
+    <string name="pref_caffeine_timelimit_title">"Отключение экрана по умолчанию"</string>
+    <string name="pref_caffeine_timelimit_title_extended">"Отключение экрана по умолчанию"</string>
+    <string name="pref_caffeine_screen_dimming_title">"Разрешить затемнение экрана"</string>
+    <string name="pref_caffeine_screen_dimming_title_extended">"Когда включено, яркость экрана сильно уменьшается, если активирована функция  \"Тайм-аут экрана\"  Вашего устройства."</string>
+    <string name="introduction_caffeinate">"Добро пожаловать!
+  Caffeinate работает через Вашу верхнюю шторку."</string>
+    <string name="introduction_caffeinate_settings_hint">"У Caffeinate также есть свои настройки! Нажмите кнопку в правом углу, чтобы взглянуть."</string>
+    <string name="summary_launcher_icon_warning">"Внимание! Выключение данной функции усложнит запуск приложения с Вашего устройства через Главное Меню/Play Маркет.
+
+Вам нужно будет запустить программу со шторки и кликнуть по уведомлению ,чтобы вернуться сюда."</string>
+    <string name="caffeinate_tile_reset_state_hint">"Подсказка: если Caffeinate не работает, попробуйте удалить настройку Caffeinate из Вашей верхней шторки и повторно добавьте его. Это должно помочь сбросить состояние программы!"</string>
+    <string name="pref_caffeine_time_limit">"Установка продолжительности процесса Caffeinate после старта."</string>
+</resources>

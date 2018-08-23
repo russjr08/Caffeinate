@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"Cafeínado"</string>
+    <string name="caffeinate_tile_label">"Cafeínado"</string>
+    <string name="soundprofile_tile_label_vibrate">"Vibrar"</string>
+    <string name="soundprofile_tile_label_ringer">"Normal"</string>
+    <string name="sound_dialog_dnd_error_title">"Aviso: DND está Activo"</string>
+    <string name="sound_dialog_dnd_error_message">"Como o DND está ativo, o estado do som não pode ser alertado neste momento. Por favor desligar o Modo DND e tente novamente.
+
+Também pode autorizar a permissão de Cafeínado para modificar o estado DND clicando no \"Autorização da permissão\"."</string>
+    <string name="caffeination_in_progress">"Cafeínado está activo, o seu écran ficará ligado até o contador chegar a zero. Toque para visitar as definições."</string>
+    <string name="title_activity_settings">"Definições"</string>
+
+    <!-- Strings related to Settings
+     Preference Header Strings -->
+    <string name="pref_header_general">"Geral"</string>
+    <string name="pref_header_caffeine">"Tecla Cafeínado"</string>
+    <string name="menu_entry_settings">"Definições"</string>
+    <string name="setting_summary_notificationtest">"Forçar notificação persistente activa (como tentativa para manter a tecla a funcionar)"</string>
+    <string name="setting_title_notificationtest">"Forçar Opt-In para Notificação A/B teste"</string>
+    <string name="tile_sound_label">"Perfil de som"</string>
+    <string name="pref_caffeine_timelimit_title">"Écran predefinido terminado"</string>
+    <string name="pref_caffeine_timelimit_title_extended">"Écran predefinido terminado"</string>
+    <string name="pref_caffeine_screen_dimming_title">"Permitir écran baixar luminosidade"</string>
+    <string name="pref_caffeine_screen_dimming_title_extended">"Quando activo, o brilho do écran é fortemente reduzido depois dos sistemas predefinidos das definições do \"Écran Predefinido terminado\""</string>
+    <string name="introduction_caffeinate">"Bem vindo!
+Cafeínado trabalha via definições rápidas."</string>
+    <string name="introduction_caffeinate_settings_hint">"Cafeínado também tem as suas próprias definições! Clica no botão menu acima para dar uma olhada."</string>
+    <string name="summary_launcher_icon_warning">"Aviso: desligar esta função será impossível lançar a aplicação pelo seu écran principal/PlayStore.
+
+Precisará de iniciar Cafeínado, e clicar na notificação para voltar a este ponto."</string>
+    <string name="caffeinate_tile_reset_state_hint">"Dica: Se Cafeínado ficar bloqueado, tente remover a tecla das suas definições rápidas, e volte a adicionar, de forma a efectuar reset ao seu estado!"</string>
+    <string name="pref_caffeine_time_limit">"Indica a partir de quanto tempo o processo de Cafeínado é iniciado."</string>
+</resources>
