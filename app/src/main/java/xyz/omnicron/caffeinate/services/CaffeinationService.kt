@@ -2,6 +2,7 @@ package xyz.omnicron.caffeinate.services
 
 import android.app.*
 import android.content.*
+import android.graphics.drawable.Icon
 import android.os.*
 import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
@@ -52,6 +53,39 @@ class CaffeinationService: Service() {
         return mBinder
     }
 
+    fun createNotification(infinite: Boolean = false) {
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val launcherIntent = Intent(this, SettingsActivity::class.java)
+        val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_TEXT, NotificationManager.IMPORTANCE_MIN)
+            notificationManager.createNotificationChannel(notificationChannel)
+            notification = Notification.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
+                    .setContentTitle("Caffeination in progress...")
+                    .setContentText(getString(R.string.caffeination_in_progress))
+                    .setSmallIcon(if(!infinite) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
+                    .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
+                    .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
+                    .setChannelId(NOTIFICATION_CHANNEL_ID)
+                    .build()
+        } else {
+            notification = Notification.Builder(applicationContext)
+                    .setContentTitle("Caffeination in progress...")
+                    .setContentText(getString(R.string.caffeination_in_progress))
+                    .setSmallIcon(if(!infinite) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
+                    .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
+                    .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
+                    .build()
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         Log.d("Caffeine", "Caffeination Service is now running.")
@@ -84,37 +118,11 @@ class CaffeinationService: Service() {
         }
 
 
-        val launcherIntent = Intent(this, SettingsActivity::class.java)
-        val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         registerReceiver(stopActionReceiver, IntentFilter(stopIntent.action))
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_TEXT, NotificationManager.IMPORTANCE_MIN)
-            notificationManager.createNotificationChannel(notificationChannel)
-            notification = Notification.Builder(applicationContext)
-                    .setContentTitle("Caffeination in progress...")
-                    .setContentText(getString(R.string.caffeination_in_progress))
-                    .setSmallIcon(R.drawable.ic_tile_icon_24dp)
-                    .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
-                    .setPriority(Notification.PRIORITY_MAX)
-                    .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
-                    .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
-                    .setChannelId(NOTIFICATION_CHANNEL_ID)
-                    .build()
-        } else {
-            notification = Notification.Builder(applicationContext)
-                    .setContentTitle("Caffeination in progress...")
-                    .setContentText(getString(R.string.caffeination_in_progress))
-                    .setSmallIcon(R.drawable.ic_tile_icon_24dp)
-                    .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
-                    .setPriority(Notification.PRIORITY_MAX)
-                    .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
-                    .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
-                    .build()
-        }
+        createNotification()
 
         startTimer()
 
@@ -128,10 +136,12 @@ class CaffeinationService: Service() {
             infiniteMode = true
             tile?.label = "∞"
             tile?.updateTile()
+            createNotification(true)
             startForeground(50, notification)
         } else {
             tile?.label = timeConversion(newTime)
             tile?.updateTile()
+            createNotification()
             startTimer(newTime)
         }
     }
