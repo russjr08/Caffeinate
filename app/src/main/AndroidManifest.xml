@@ -8,65 +8,74 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name=".Caffeine"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".Caffeine"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".ActionReceiver" android:exported="true">
+
+        <receiver
+            android:name=".ActionReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="xyz.omnicron.caffeinate.STOP_ACTION" />
             </intent-filter>
         </receiver>
+
         <service
             android:name=".services.CaffeinateTileService"
             android:icon="@drawable/ic_tile_icon_24dp"
             android:label="@string/caffeinate_tile_label"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="false" />
+
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
-
-        <service android:name=".services.SoundProfileTileService"
+        <service
+            android:name=".services.SoundProfileTileService"
             android:icon="@drawable/ic_notifications_black_24dp"
             android:label="@string/tile_sound_label"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-
-            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
 
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
-
         </service>
-
-        <service android:name=".services.CaffeinationService"
+        <service
+            android:name=".services.CaffeinationService"
             android:exported="false" />
 
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-
-        <activity android:name=".ABTestingDebugActivity"
+        <activity
+            android:name=".ABTestingDebugActivity"
             android:label="A/B Testing Debug Screen">
-
             <intent-filter>
                 <action android:name="xyz.omnicron.caffeinate.ABTestingDebugActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
+        <activity
+            android:name=".CreditsActivity"
+            android:label="@string/title_activity_credits"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

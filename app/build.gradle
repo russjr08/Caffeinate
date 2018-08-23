@@ -13,8 +13,8 @@ android {
         applicationId "xyz.omnicron.caffeinate"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 24
-        versionName "3.2.7"
+        versionCode 25
+        versionName "3.3.0"
     }
     buildTypes {
         release {
@@ -38,9 +38,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-crash:16.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-config:16.0.0'
+    implementation 'com.google.firebase:firebase-firestore:17.1.0'
     implementation 'com.android.support:support-v4:28.0.0-rc01'
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha2'
     implementation 'com.afollestad.material-dialogs:core:0.9.5.0'
+    implementation 'com.android.support:design:28.0.0-rc01'
     testImplementation 'junit:junit:4.12'
 }
 repositories {
@@ -52,3 +54,4 @@ repositories {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android-extensions'
