@@ -8,7 +8,7 @@
     <string name="sound_dialog_dnd_error_message">"Ponieważ status Nie przeszkadzać jest aktywny, tryb dźwięku nie może być aktualnie zmieniony. Wyłącz Tryb Nie przeszkadzać i spróbuj ponownie.
 
 Możesz także przyznać Caffeinate uprawnienie na zmianę statusu Nie przeszkadzać, klikając \"Przyznaj uprawnienie\" "</string>
-    <string name="caffeination_in_progress">"Caffeinate działa w tle, twój wyświetlacz pozostanie aktywny dopóki licznik nie dojdzie do zera. Dotknij, aby przejść do ustawień. "</string>
+    <string name="caffeination_in_progress">Caffeinate działa w tle, twój wyświetlacz pozostanie aktywny dopóki licznik nie dojdzie do zera. Dotknij, aby przejść do ustawień. (%1$s)</string>
     <string name="title_activity_settings">"Ustawienia"</string>
 
     <!-- Strings related to Settings

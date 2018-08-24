@@ -8,7 +8,7 @@
     <string name="sound_dialog_dnd_error_message">"Como o DND está ativo, o estado do som não pode ser alertado neste momento. Por favor desligar o Modo DND e tente novamente.
 
 Também pode autorizar a permissão de Cafeínado para modificar o estado DND clicando no \"Autorização da permissão\"."</string>
-    <string name="caffeination_in_progress">"Cafeínado está activo, o seu écran ficará ligado até o contador chegar a zero. Toque para visitar as definições."</string>
+    <string name="caffeination_in_progress">Cafeínado está activo, o seu écran ficará ligado até o contador chegar a zero. Toque para visitar as definições. (%1$s)</string>
     <string name="title_activity_settings">"Definições"</string>
 
     <!-- Strings related to Settings

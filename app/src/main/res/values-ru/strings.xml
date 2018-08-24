@@ -8,7 +8,7 @@
     <string name="sound_dialog_dnd_error_message">"Поскольку DND активен, ваше звуковое состояние не может быть изменено в данный момент. Отключите режим DND и повторите попытку.
 
 Вы также можете предоставить Caffeinate разрешение на изменение состояния DND, нажав кнопку \"Предоставить Разрешение\"."</string>
-    <string name="caffeination_in_progress">"Caffeinate работает, ваш дисплей будет оставаться активным, пока Таймер не достигнет нуля. Нажмите, чтобы посетить настройки."</string>
+    <string name="caffeination_in_progress">Caffeinate работает, ваш дисплей будет оставаться активным, пока Таймер не достигнет нуля. Нажмите, чтобы посетить настройки. (%1$s)</string>
     <string name="title_activity_settings">"Настройки"</string>
 
     <!-- Strings related to Settings

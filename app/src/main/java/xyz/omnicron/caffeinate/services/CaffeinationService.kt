@@ -53,7 +53,7 @@ class CaffeinationService: Service() {
         return mBinder
     }
 
-    fun createNotification(infinite: Boolean = false) {
+    fun buildNotification() {
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -61,26 +61,24 @@ class CaffeinationService: Service() {
         val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_TEXT, NotificationManager.IMPORTANCE_MIN)
+            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_TEXT, NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(notificationChannel)
             notification = Notification.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
                     .setContentTitle("Caffeination in progress...")
-                    .setContentText(getString(R.string.caffeination_in_progress))
-                    .setSmallIcon(if(!infinite) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
+                    .setSmallIcon(if(!infiniteMode) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
                     .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                     .setPriority(Notification.PRIORITY_MAX)
-                    .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
+                    .setStyle(Notification.BigTextStyle().bigText(if(infiniteMode) getString(R.string.caffeination_in_progress_infinite) else getString(R.string.caffeination_in_progress, timeConversion(timeLeft))))
                     .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
                     .setChannelId(NOTIFICATION_CHANNEL_ID)
                     .build()
         } else {
             notification = Notification.Builder(applicationContext)
                     .setContentTitle("Caffeination in progress...")
-                    .setContentText(getString(R.string.caffeination_in_progress))
-                    .setSmallIcon(if(!infinite) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
+                    .setSmallIcon(if(!infiniteMode) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
                     .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                     .setPriority(Notification.PRIORITY_MAX)
-                    .setStyle(Notification.BigTextStyle().bigText(getString(R.string.caffeination_in_progress)))
+                    .setStyle(Notification.BigTextStyle().bigText(if(infiniteMode) getString(R.string.caffeination_in_progress_infinite) else getString(R.string.caffeination_in_progress, timeConversion(timeLeft))))
                     .addAction(R.drawable.ic_stop, "Cancel", stopPendingIntent)
                     .build()
         }
@@ -122,7 +120,7 @@ class CaffeinationService: Service() {
 
         registerReceiver(stopActionReceiver, IntentFilter(stopIntent.action))
 
-        createNotification()
+        buildNotification()
 
         startTimer()
 
@@ -136,12 +134,14 @@ class CaffeinationService: Service() {
             infiniteMode = true
             tile?.label = "∞"
             tile?.updateTile()
-            createNotification(true)
+            tile?.icon = Icon.createWithResource(baseContext, R.drawable.infinity)
+            buildNotification()
             startForeground(50, notification)
         } else {
             tile?.label = timeConversion(newTime)
             tile?.updateTile()
-            createNotification()
+            tile?.icon = Icon.createWithResource(baseContext, R.drawable.ic_tile_icon_24dp)
+            buildNotification()
             startTimer(newTime)
         }
     }
@@ -158,6 +158,9 @@ class CaffeinationService: Service() {
                 tile?.label = timeConversion(remains)
                 tile?.state = Tile.STATE_ACTIVE
                 timeLeft = remains
+                buildNotification()
+                val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.notify(50, notification)
                 tile?.updateTile()
             }
 
@@ -203,6 +206,7 @@ class CaffeinationService: Service() {
         timer?.cancel()
         tile?.state = Tile.STATE_INACTIVE
         tile?.label = resources.getString(R.string.caffeinate_tile_label)
+        tile?.icon = Icon.createWithResource(baseContext, R.drawable.ic_tile_icon_24dp)
         infiniteMode = false
         timeLeft = 0
         tile?.updateTile()

@@ -3,6 +3,7 @@ package xyz.omnicron.caffeinate.services
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Icon
 import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
@@ -25,6 +26,7 @@ class CaffeinateTileService : TileService() {
 
         if(qsTile?.state == Tile.STATE_INACTIVE) {
             caffeine.tile = qsTile
+            qsTile?.icon = Icon.createWithResource(baseContext, R.drawable.ic_tile_icon_24dp)
             startService(service)
             caffeine.initializeServiceConnection()
             applicationContext.bindService(service, caffeine.connection, Context.BIND_AUTO_CREATE)

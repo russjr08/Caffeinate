@@ -8,7 +8,9 @@
     <string name="sound_dialog_dnd_error_title">Warning: DND Is Active</string>
     <string name="sound_dialog_dnd_error_message">Because DND is active, your sound state cannot be changed at this time. Please disable DND mode and retry.\n\nYou can also grant Caffeinate permission to modify your DND state by clicking \"Grant Permission\".</string>
 
-    <string name="caffeination_in_progress">Caffeinate is running, your display will remain active until the timer hits zero. Tap to visit settings.</string>
+    <string name="caffeination_in_progress">Caffeinate is running, your display will remain active until the timer (%1$s) hits zero. Tap to visit settings.</string>
+    <string name="caffeination_in_progress_infinite">Caffeinate is running, your display will remain active until you click cancel, or lock your screen. Tap to visit settings.</string>
+
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
