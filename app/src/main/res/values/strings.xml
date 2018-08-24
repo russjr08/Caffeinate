@@ -39,6 +39,8 @@
     <string name="credits_item_contributors">Contributors:</string>
     <string name="notification_caffeinate_title">Caffeination in progress…</string>
     <string name="notification_caffeinate_action_cancel">Cancel</string>
+    <string name="notification_caffeinate_action_infinite">Switch to Infinite</string>
+    <string name="notification_caffeinate_action_timer_reset">Switch to Timer</string>
     <string name="credits_invitation_text">If you\'d like to help translate Caffeinate to your language, <a href='https://poeditor.com/join/project/ZYB37nK4gR'>click here</a>. Your help is greatly appreciated!</string>
 
 </resources>

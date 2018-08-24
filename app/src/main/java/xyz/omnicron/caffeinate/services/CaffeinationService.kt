@@ -27,7 +27,9 @@ class CaffeinationService: Service() {
     private lateinit var sharedPrefs: SharedPreferences
 
     private val stopActionReceiver = ActionReceiver()
+    private val infiniteActionReceiver = ActionReceiver()
     private val stopIntent = Intent()
+
 
     var tile: Tile? = null
 
@@ -55,15 +57,29 @@ class CaffeinationService: Service() {
 
     fun buildNotification() {
 
+        val infiniteIntent = Intent(baseContext, ActionReceiver::class.java)
+        val timerResetIntent = Intent(baseContext, ActionReceiver::class.java)
+
+
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val launcherIntent = Intent(this, SettingsActivity::class.java)
         val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        infiniteIntent.action = "xyz.omnicron.caffeinate.TIMER_SET_INFINITE"
+        timerResetIntent.action = "xyz.omnicron.caffeinate.TIMER_RESET"
+
+        val infinitePendingIntent = PendingIntent.getBroadcast(this, 2, infiniteIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val timerResetPendingIntent = PendingIntent.getBroadcast(this, 1, timerResetIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+        var builder: Notification.Builder
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_TEXT, NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(notificationChannel)
-            notification = Notification.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
+
+            builder = Notification.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
                     .setContentTitle(getString(R.string.notification_caffeinate_title))
                     .setSmallIcon(if(!infiniteMode) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
                     .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
@@ -71,16 +87,34 @@ class CaffeinationService: Service() {
                     .setStyle(Notification.BigTextStyle().bigText(if(infiniteMode) getString(R.string.caffeination_in_progress_infinite) else getString(R.string.caffeination_in_progress, timeConversion(timeLeft))))
                     .addAction(R.drawable.ic_stop, getString(R.string.notification_caffeinate_action_cancel), stopPendingIntent)
                     .setChannelId(NOTIFICATION_CHANNEL_ID)
-                    .build()
+
+            if(!infiniteMode) {
+                builder.addAction(R.drawable.ic_infinity_white_18dp, getString(R.string.notification_caffeinate_action_infinite), infinitePendingIntent)
+            } else {
+                builder.addAction(R.drawable.ic_hourglass, getString(R.string.notification_caffeinate_action_timer_reset), timerResetPendingIntent)
+
+            }
+
+            notification = builder.build()
+
         } else {
-            notification = Notification.Builder(applicationContext)
+
+            builder = Notification.Builder(applicationContext)
                     .setContentTitle(getString(R.string.notification_caffeinate_title))
                     .setSmallIcon(if(!infiniteMode) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
                     .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                     .setPriority(Notification.PRIORITY_MAX)
                     .setStyle(Notification.BigTextStyle().bigText(if(infiniteMode) getString(R.string.caffeination_in_progress_infinite) else getString(R.string.caffeination_in_progress, timeConversion(timeLeft))))
                     .addAction(R.drawable.ic_stop, getString(R.string.notification_caffeinate_action_cancel), stopPendingIntent)
-                    .build()
+
+            if(!infiniteMode) {
+                builder.addAction(R.drawable.ic_infinity_white_18dp, getString(R.string.notification_caffeinate_action_infinite), infinitePendingIntent)
+            } else {
+                builder.addAction(R.drawable.ic_hourglass, getString(R.string.notification_caffeinate_action_timer_reset), timerResetPendingIntent)
+            }
+
+            notification = builder.build()
+
         }
     }
 
@@ -133,14 +167,17 @@ class CaffeinationService: Service() {
         if(newTime > 3600000) { // 1 hour
             infiniteMode = true
             tile?.label = "∞"
+            tile?.state = Tile.STATE_INACTIVE
             tile?.updateTile()
-            tile?.icon = Icon.createWithResource(baseContext, R.drawable.infinity)
+            tile?.icon = Icon.createWithResource(applicationContext, R.drawable.infinity)
+            tile?.state = Tile.STATE_ACTIVE
+            tile?.updateTile()
             buildNotification()
             startForeground(50, notification)
         } else {
             tile?.label = timeConversion(newTime)
-            tile?.updateTile()
             tile?.icon = Icon.createWithResource(baseContext, R.drawable.ic_tile_icon_24dp)
+            tile?.updateTile()
             buildNotification()
             startTimer(newTime)
         }
