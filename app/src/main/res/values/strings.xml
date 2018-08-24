@@ -18,6 +18,7 @@
     <!-- Preference Header Strings -->
     <string name="pref_header_general">General</string>
     <string name="pref_header_caffeine">Caffeine Tile</string>
+    <string name="pref_caffeine_time_limit">Sets how long the Caffeination process will start from.</string>
 
     <string name="menu_entry_settings">Settings</string>
     <string name="setting_summary_notificationtest">Force enable persistent notification (As an attempt to keep the tile running)</string>
@@ -27,20 +28,26 @@
     <string name="pref_caffeine_timelimit_title_extended">Default Screen Timeout</string>
     <string name="pref_caffeine_screen_dimming_title">Allow screen to dim</string>
     <string name="pref_caffeine_screen_dimming_title_extended">When enabled, screen brightness is heavily reduced after the built-in system\'s \"Screen Timeout\" setting.</string>
+
     <string name="introduction_caffeinate">Welcome! \n Caffeinate operates via your Quick Settings.</string>
     <string name="introduction_caffeinate_settings_hint">Caffeinate also has its own settings! Click the menu button above to take a peek.</string>
+
     <string name="summary_launcher_icon_warning">Warning: Turning this off will make it impossible to launch the app from your home screen/Play Store.\n\nYou will need to start Caffeinating, and then click the notification to return here.</string>
     <string name="caffeinate_tile_reset_state_hint">Hint: If Caffeinate gets stuck, try removing the tile from your quick settings, and re-add it, in order to reset it\'s state!</string>
-    <string name="pref_caffeine_time_limit">Sets how long the Caffeination process will start from.</string>
+
+
     <string name="title_activity_credits">Credits</string>
     <string name="credits_header">Thank you translators!</string>
     <string name="credits_description">Caffeinate has been translated to various languages by the following volunteers:</string>
     <string name="menu_entry_credits">Credits</string>
     <string name="credits_item_contributors">Contributors:</string>
+
     <string name="notification_caffeinate_title">Caffeination in progress…</string>
     <string name="notification_caffeinate_action_cancel">Cancel</string>
     <string name="notification_caffeinate_action_infinite">Switch to Infinite</string>
     <string name="notification_caffeinate_action_timer_reset">Switch to Timer</string>
+
+
     <string name="credits_invitation_text">If you\'d like to help translate Caffeinate to your language, <a href='https://poeditor.com/join/project/ZYB37nK4gR'>click here</a>. Your help is greatly appreciated!</string>
 
 </resources>
