@@ -37,5 +37,7 @@
     <string name="credits_description">Caffeinate has been translated to various languages by the following volunteers:</string>
     <string name="menu_entry_credits">Credits</string>
     <string name="credits_item_contributors">Contributors:</string>
+    <string name="notification_caffeinate_title">Caffeination in progress…</string>
+    <string name="notification_caffeinate_action_cancel">Cancel</string>
 
 </resources>
