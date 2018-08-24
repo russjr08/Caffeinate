@@ -1,13 +1,10 @@
 package xyz.omnicron.caffeinate
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import com.google.android.gms.tasks.OnCompleteListener
+import android.text.method.LinkMovementMethod
 import com.google.firebase.firestore.FirebaseFirestore
-
-import kotlinx.android.synthetic.main.activity_credits.*
 import kotlinx.android.synthetic.main.content_credits.*
 import xyz.omnicron.caffeinate.adapters.CreditsAdapter
 import xyz.omnicron.caffeinate.models.Language
@@ -22,6 +19,8 @@ class CreditsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_credits)
         setSupportActionBar(toolbar)
+
+        text_contrib_invitation.movementMethod = LinkMovementMethod.getInstance()
 
         refresh_holder.isEnabled = false
         refresh_holder.isRefreshing = true
