@@ -1,2 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="soundprofile_tile_label_vibrate">"Vibrazione"</string>
+    <string name="soundprofile_tile_label_ringer">"Normale"</string>
+    <string name="sound_dialog_dnd_error_title">"Attenzione: Non Disturbare è attivo"</string>
+    <string name="sound_dialog_dnd_error_message">"Dato che la modalità Non Disturbare è attiva, non è possibile cambiare la modalità di suoneria. Per favora disabilitala e riprova.
+
+Puoi anche dare il permesso a \"Caffeinate\" di modificare lo stato della modalità Non Disturbare cliccando su \"Concedi Permesso\" "</string>
+    <string name="caffeination_in_progress">"Caffeinate è in esecuzione, il tuo display rimarrà attivo finché il timer non raggiunge lo zero. Tocca per le impostazioni. (%1$s)"</string>
+    <string name="title_activity_settings">"Impostazioni"</string>
+
+    <!-- Strings related to Settings
+     Preference Header Strings -->
+    <string name="pref_header_general">"Generali"</string>
+    <string name="pref_header_caffeine">"Tile Caffeinate"</string>
+    <string name="menu_entry_settings">"Impostazioni"</string>
+    <string name="setting_summary_notificationtest">"Forza la notifica persistente (Serve per cercare di tenere la tile in esecuzione) "</string>
+    <string name="setting_title_notificationtest">"Forza l'Opt-In per il test della Notifica A/B"</string>
+    <string name="tile_sound_label">"Profilo del suono"</string>
+    <string name="pref_caffeine_timelimit_title">"Timeout Schermo Predefinito"</string>
+    <string name="pref_caffeine_timelimit_title_extended">"Timeout Schermo Predefinito"</string>
+    <string name="pref_caffeine_screen_dimming_title">"Consenti allo schermo di dimmerarsi"</string>
+    <string name="pref_caffeine_screen_dimming_title_extended">"Quando abilitato, la luminosità dello schermo è considerevolmente ridotta dopo il \"Timeout Schermo\" delle impostazioni di sistema."</string>
+    <string name="introduction_caffeinate">"Ciao!
+Caffeinate funziona attraverso i Quick Settings."</string>
+    <string name="introduction_caffeinate_settings_hint">"Caffeinate ha anche le sue impostazioni! Clicca il pulsante menu sopra per aprirle."</string>
+    <string name="summary_launcher_icon_warning">"Attenzione: disabilitando questa opzione renderà impossibile avviare l'applicazione dal tuo launcher o dal Play Store.
+
+Dovrai avviare Caffeinate dai Quick Settings e dopo toccare la notifica per tornare qui."</string>
+    <string name="caffeinate_tile_reset_state_hint">"Suggerimento: se Caffeinate si blocca, prova a rimuovere il tile dai Quick Settings e poi a raggiungerla per resettare il suo stato!"</string>
+    <string name="pref_caffeine_time_limit">"Imposta il tempo predefinito dal quale Caffeinate comincerà quando attivato."</string>
+    <string name="title_activity_credits">"Crediti"</string>
+    <string name="credits_header">"Grazie traduttori!"</string>
+    <string name="credits_description">"Caffeinate è stato tradotto in varie lingue dai seguenti volontari:"</string>
+    <string name="menu_entry_credits">"Crediti"</string>
+    <string name="credits_item_contributors">"Contributori:"</string>
+</resources>
