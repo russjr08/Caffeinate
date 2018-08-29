@@ -42,8 +42,7 @@ class CaffeinationService: Service() {
 
     val WL_TAG = "Caffeinate"
 
-    private val NOTIFICATION_CHANNEL_ID = "caffeination"
-    private val NOTIFICATION_CHANNEL_TEXT = "Caffeination"
+    private val NOTIFICATION_CHANNEL_ID = "caffeination_in_progress"
 
     inner class LocalBinder: Binder() {
         fun getService(): CaffeinationService {
@@ -73,10 +72,15 @@ class CaffeinationService: Service() {
         val timerResetPendingIntent = PendingIntent.getBroadcast(this, 1, timerResetIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
 
-        var builder: Notification.Builder
+        val builder: Notification.Builder
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_TEXT, NotificationManager.IMPORTANCE_HIGH)
+            val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID, getString(R.string.notification_channel_caffeination_title), NotificationManager.IMPORTANCE_DEFAULT)
+            notificationChannel.description = getString(R.string.notification_channel_caffeination_description)
+            notificationChannel.setSound(null, null)
+            notificationChannel.enableVibration(false)
+            notificationChannel.setShowBadge(false)
+            notificationChannel.enableLights(false)
             notificationManager.createNotificationChannel(notificationChannel)
 
             builder = Notification.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
