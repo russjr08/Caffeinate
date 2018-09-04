@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"Cafeína"</string>
+    <string name="caffeinate_tile_label">"Cafeína"</string>
+    <string name="soundprofile_tile_label_vibrate">"Vibrar"</string>
+    <string name="soundprofile_tile_label_ringer">"Normal"</string>
+    <string name="sound_dialog_dnd_error_title">"Atenção: Não perturbe está ativo"</string>
+    <string name="sound_dialog_dnd_error_message">"Como o 'não perturbe' está ativo o estado do som não pode ser alterado. Por favor, desative o modo não perturbe e tente novamente.
+
+Você também pode dar permissão para que o programa Cafeína possa modificar o estado do não perturbe clicando em \"Permitir\"."</string>
+    <string name="caffeination_in_progress">"Cafeína está em execução, sua tela ficará ativa até o timer (%1$s) zerar. Clique para acessar as configurações."</string>
+    <string name="title_activity_settings">"Configurações"</string>
+
+    <!-- Strings related to Settings
+     Preference Header Strings -->
+    <string name="pref_header_general">"Geral"</string>
+    <string name="pref_header_caffeine">"Cafeína"</string>
+    <string name="menu_entry_settings">"Configurações"</string>
+    <string name="setting_summary_notificationtest">"Forçar notificação persistente (como tentativa de manter o programa em execução)"</string>
+    <string name="setting_title_notificationtest">"Forçar opção para notificações 'A/B test'"</string>
+    <string name="tile_sound_label">"Perfil de Som"</string>
+    <string name="pref_caffeine_timelimit_title">"Tempo padrão para desligar a tela"</string>
+    <string name="pref_caffeine_timelimit_title_extended">"Tempo padrão para desligar a tela"</string>
+    <string name="pref_caffeine_screen_dimming_title">"Permitir que a tela escureça"</string>
+    <string name="pref_caffeine_screen_dimming_title_extended">"Quando ativado, o brilho da tela será reduzido depois do tempo já configurado em \"tempo limite da tela\"."</string>
+    <string name="introduction_caffeinate">"Bem vindo.
+Cafeína funciona através de uma opção nas configurações rápidas."</string>
+    <string name="introduction_caffeinate_settings_hint">"Cafeína também tem suas próprias configurações. Clique no menu abaixo para dar uma olhada."</string>
+    <string name="summary_launcher_icon_warning">"Atenção: Desativar esta opção tornará impossível abrir a aplicação da sua tela inicial.
+
+Será preciso iniciar o Cafeína e então clicar na notificação do programa para voltar a esta tela."</string>
+    <string name="caffeinate_tile_reset_state_hint">"Dica: Se Cafeína travar, tente removê-lo das opções dos ajustes rápidos e depois adicioná-lo novamente. Isto tente a zerar seu estado e fazê-lo funcionar novamente."</string>
+    <string name="pref_caffeine_time_limit">"Configura o tempo inicial utilizado."</string>
+    <string name="title_activity_credits">"Créditos"</string>
+    <string name="credits_header">"Obrigado tradutores!"</string>
+    <string name="credits_description">"Cafeína foi traduzido para vários idiomas pelos seguintes voluntários:"</string>
+    <string name="menu_entry_credits">"Créditos"</string>
+    <string name="credits_item_contributors">"Contribuições:"</string>
+    <string name="caffeination_in_progress_infinite">"Cafeína está em execução, sua tela ficará ativa até você clicar em cancelar ou travar/bloquear sua tela. Clique para acessar as configurações."</string>
+    <string name="notification_caffeinate_title">"Injetando Cafeína..."</string>
+    <string name="notification_caffeinate_action_cancel">"Cancelar"</string>
+    <string name="credits_invitation_text">"Se você quiser/puder ajudar a traduzir o programa Cafeína para seu idioma, <a href='https://poeditor.com/join/project/ZYB37nK4gR'>clique aqui</a>. Sua ajuda é muito importante!"</string>
+</resources>
