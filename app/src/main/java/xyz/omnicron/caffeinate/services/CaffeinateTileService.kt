@@ -54,7 +54,7 @@ class CaffeinateTileService : TileService() {
             }
         }
 
-        qsTile.updateTile()
+        qsTile?.updateTile()
     }
 
     override fun onTileAdded() {

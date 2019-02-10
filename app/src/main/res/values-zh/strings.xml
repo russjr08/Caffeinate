@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"Caffeinate"</string>
+    <string name="caffeinate_tile_label">"Caffeinate"</string>
+    <string name="soundprofile_tile_label_vibrate">"震动"</string>
+    <string name="soundprofile_tile_label_ringer">"普通"</string>
+    <string name="sound_dialog_dnd_error_title">"警告：DND 处于活动状态"</string>
+    <string name="sound_dialog_dnd_error_message">"由于 DND 处于活动状态，因此你无法更改声音状态。 请禁用 DND 模式并重试。
+
+您还可以通过单击 “授予权限” 授予 Caffeinate 修改 DND 状态的权限。"</string>
+    <string name="caffeination_in_progress">"Caffeinate 正在运行，您的显示屏将保持活动状态，直到计时器（％1 $ s）达到零。 点按即可访问设置。"</string>
+    <string name="title_activity_settings">"设置"</string>
+
+    <!-- Strings related to Settings
+     Preference Header Strings -->
+    <string name="pref_header_general">"一般"</string>
+    <string name="pref_header_caffeine">"Caffeine Tile"</string>
+    <string name="menu_entry_settings">"设置"</string>
+    <string name="setting_summary_notificationtest">"强制开启永久通知（作为保持快捷开关持续运行的手段）"</string>
+    <string name="setting_title_notificationtest">"强制选择加入通知A / B测试"</string>
+    <string name="tile_sound_label">"声音侧写档"</string>
+    <string name="pref_caffeine_timelimit_title">"默认熄屏计时"</string>
+    <string name="pref_caffeine_timelimit_title_extended">"默认屏幕超时"</string>
+    <string name="pref_caffeine_screen_dimming_title">"允许屏幕变暗"</string>
+    <string name="pref_caffeine_screen_dimming_title_extended">"启用后，在系统的内置“熄屏计时”设置的时间后，屏幕亮度会大大降低。"</string>
+    <string name="introduction_caffeinate">"欢迎使用！请通过快捷开关设置操作本软件。"</string>
+    <string name="introduction_caffeinate_settings_hint">"本软件同样具有自己的设置！点击上方的菜单按钮来查看。"</string>
+    <string name="summary_launcher_icon_warning">"警告：关闭此功能将无法从主屏幕/ Play商店启动应用程序。您需要启动Caffeinating，然后单击通知返回此处。"</string>
+    <string name="caffeinate_tile_reset_state_hint">"提示：如果Caffeinate卡住，请尝试从快速设置中删除磁贴，然后重新添加，以重置其状态！"</string>
+    <string name="pref_caffeine_time_limit">"设置Caffeination进程的起始时间。"</string>
+    <string name="title_activity_credits">"鸣谢"</string>
+    <string name="credits_header">"谢谢翻译！"</string>
+    <string name="credits_description">"咖啡因已由以下志愿者翻译成各种语言："</string>
+    <string name="menu_entry_credits">"鸣谢"</string>
+    <string name="credits_item_contributors">"提供者："</string>
+    <string name="caffeination_in_progress_infinite">"咖啡因正在运行，您的显示将保持活动状态，直到您单击取消或锁定屏幕。点按即可访问设置。"</string>
+    <string name="notification_caffeinate_title">"咖啡因正在进行中......"</string>
+    <string name="notification_caffeinate_action_cancel">"取消"</string>
+    <string name="credits_invitation_text">"如果您想帮助将Caffeinate翻译成您的语言， &lt;a href=https://poeditor.com/join/project/ZYB37nK4gR&gt;请单击此处&lt;/a&gt; 。非常感谢您的帮助！"</string>
+</resources>

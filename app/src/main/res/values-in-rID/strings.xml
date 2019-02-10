@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"Caffeinate"</string>
+    <string name="caffeinate_tile_label">"Caffeinate"</string>
+    <string name="soundprofile_tile_label_vibrate">"Getar"</string>
+    <string name="soundprofile_tile_label_ringer">"Normal"</string>
+    <string name="sound_dialog_dnd_error_title">"Peringatan: Mode sunyi aktif"</string>
+    <string name="sound_dialog_dnd_error_message"></string>
+    <string name="caffeination_in_progress">"Caffeinate berjalan. Layar anda akan tetap menyala hingga timer (%1$ detik) berakhir. Sentuh untuk pengaturan"</string>
+    <string name="title_activity_settings">"Pengaturan"</string>
+
+    <!-- Strings related to Settings
+     Preference Header Strings -->
+    <string name="pref_header_general">"General"</string>
+    <string name="pref_header_caffeine">"Tile Caffeine"</string>
+    <string name="menu_entry_settings">"Pengaturan"</string>
+    <string name="setting_summary_notificationtest">"Tetap munculkan notifikasi (Agar tile tetap berjalan)"</string>
+    <string name="setting_title_notificationtest">"Test paksa masuk ke notifikasi A/B"</string>
+    <string name="tile_sound_label">"Profil Suara"</string>
+    <string name="pref_caffeine_timelimit_title">"Waktu mati default"</string>
+    <string name="pref_caffeine_timelimit_title_extended">"Waktu mati default"</string>
+    <string name="pref_caffeine_screen_dimming_title">"Layar bisa diredupkan"</string>
+    <string name="pref_caffeine_screen_dimming_title_extended">"Saat dinyalakan, keterangan layar akan dikurangi dengan opsi \"\"Batas waktu layar\" pada sistem."</string>
+    <string name="introduction_caffeinate">"Selamat datang!
+  Caffeinate bekerja via Opsi Cepat anda."</string>
+    <string name="introduction_caffeinate_settings_hint"></string>
+    <string name="summary_launcher_icon_warning"></string>
+    <string name="caffeinate_tile_reset_state_hint"></string>
+    <string name="pref_caffeine_time_limit"></string>
+    <string name="title_activity_credits">"Kredit"</string>
+    <string name="credits_header">"Terimakasih penerjemah!"</string>
+    <string name="credits_description"></string>
+    <string name="menu_entry_credits">"Kredit"</string>
+    <string name="credits_item_contributors">"Kontributor:"</string>
+    <string name="caffeination_in_progress_infinite"></string>
+    <string name="notification_caffeinate_title">"Caffeinasi sedanc bekerja..."</string>
+    <string name="notification_caffeinate_action_cancel">"Kembali"</string>
+    <string name="credits_invitation_text"></string>
+</resources>
