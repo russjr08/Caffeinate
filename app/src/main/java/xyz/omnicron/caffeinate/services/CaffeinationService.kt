@@ -160,7 +160,12 @@ class CaffeinationService: Service() {
 
         buildNotification()
 
-        startTimer()
+        if(sharedPrefs.getBoolean("caffeine_instant_infinite_toggle", false)) {
+            startTimer()
+            increaseTimer(3600005)
+        } else {
+            startTimer()
+        }
 
     }
 

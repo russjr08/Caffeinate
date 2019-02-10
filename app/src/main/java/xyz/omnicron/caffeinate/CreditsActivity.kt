@@ -32,7 +32,7 @@ class CreditsActivity : AppCompatActivity() {
             it.addOnCompleteListener {
                 refresh_holder.isRefreshing = false
                 if(it.isSuccessful) {
-                    for(doc in it.result) {
+                    for(doc in it.result!!) {
                         System.out.println("${doc.id} => ${doc.data}")
                         val language = Language(doc.id, doc.get("lang_name") as String, doc.get("contributors") as List<String>)
                         languages.add(language)

@@ -23,6 +23,11 @@
         android:summary="@string/pref_caffeine_screen_dimming_title_extended"
         android:defaultValue="false" />
 
+    <SwitchPreference
+        android:key="caffeine_instant_infinite_toggle"
+        android:title="@string/pref_caffeine_instant_infinite_title"
+        android:summary="@string/pref_caffeine_instant_infinite_summary"
+        android:defaultValue="false" />
 
 
 </PreferenceScreen>

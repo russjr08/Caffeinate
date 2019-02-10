@@ -52,5 +52,7 @@
 
 
     <string name="credits_invitation_text">If you\'d like to help translate Caffeinate to your language, <a href='https://poeditor.com/join/project/ZYB37nK4gR'>click here</a>. Your help is greatly appreciated!</string>
+    <string name="pref_caffeine_instant_infinite_title">Skip To Infinite Mode</string>
+    <string name="pref_caffeine_instant_infinite_summary">When enabled, Caffeinate\'s countdown will be skipped, and will go straight to infinity mode.</string>
 
 </resources>

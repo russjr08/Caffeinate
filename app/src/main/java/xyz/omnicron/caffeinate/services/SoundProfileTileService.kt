@@ -49,13 +49,15 @@ class SoundProfileTileService : TileService() {
 
             }
         } else {
+            val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             val dialog = MaterialDialog.Builder(applicationContext)
                     .title(R.string.sound_dialog_dnd_error_title)
                     .content(R.string.sound_dialog_dnd_error_message)
                     .positiveText("Grant Permission")
                     .neutralText("Cancel")
                     .onPositive(MaterialDialog.SingleButtonCallback { _: MaterialDialog, _: DialogAction ->
-                        startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
+                        startActivity(intent)
                     })
                     .build()
 
@@ -70,10 +72,10 @@ class SoundProfileTileService : TileService() {
     fun isPhoneInDoNotDisturb() : Boolean {
         val notificationManager: NotificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Settings.Global.getInt(contentResolver, "zen_mode") == 0) { // 0 is normal mode
-            return false
+        return if (Settings.Global.getInt(contentResolver, "zen_mode") == 0) { // 0 is normal mode
+            false
         } else {
-            return !notificationManager.isNotificationPolicyAccessGranted
+            !notificationManager.isNotificationPolicyAccessGranted
         }
     }
 

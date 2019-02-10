@@ -32,6 +32,12 @@ class CaffeinateTileService : TileService() {
             applicationContext.bindService(service, caffeine.connection, Context.BIND_AUTO_CREATE)
             qsTile.state = Tile.STATE_ACTIVE
             qsTile.updateTile()
+
+            val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+            if(sharedPrefs.getBoolean("caffeine_instant_infinite_toggle", false)) {
+                caffeine.caffeinationService?.increaseTimer(100000000)
+            }
         } else if(qsTile?.state == Tile.STATE_ACTIVE) {
             caffeine.tile = qsTile
             if(caffeine.caffeinationService == null) {
