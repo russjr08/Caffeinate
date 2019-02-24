@@ -161,8 +161,7 @@ class CaffeinationService: Service() {
         buildNotification()
 
         if(sharedPrefs.getBoolean("caffeine_instant_infinite_toggle", false)) {
-            startTimer()
-            increaseTimer(3600005)
+            setToInfinite()
         } else {
             startTimer()
         }
@@ -174,15 +173,7 @@ class CaffeinationService: Service() {
         val newTime = timeLeft + increaseBy
 
         if(newTime > 3600000) { // 1 hour
-            infiniteMode = true
-            tile?.label = "∞"
-            tile?.state = Tile.STATE_INACTIVE
-            tile?.updateTile()
-            tile?.icon = Icon.createWithResource(applicationContext, R.drawable.infinity)
-            tile?.state = Tile.STATE_ACTIVE
-            tile?.updateTile()
-            buildNotification()
-            startForeground(50, notification)
+            setToInfinite()
         } else {
             tile?.label = timeConversion(newTime)
             tile?.icon = Icon.createWithResource(baseContext, R.drawable.ic_tile_icon_24dp)
@@ -190,6 +181,19 @@ class CaffeinationService: Service() {
             buildNotification()
             startTimer(newTime)
         }
+    }
+
+    fun setToInfinite() {
+        timer?.cancel()
+        infiniteMode = true
+        tile?.label = "∞"
+        tile?.state = Tile.STATE_INACTIVE
+        tile?.updateTile()
+        tile?.icon = Icon.createWithResource(applicationContext, R.drawable.infinity)
+        tile?.state = Tile.STATE_ACTIVE
+        tile?.updateTile()
+        buildNotification()
+        startForeground(50, notification)
     }
 
     fun startTimer(time: Long = sharedPrefs.getString("caffeine_time_limit", "300000").toLong()) {
@@ -306,8 +310,6 @@ class CaffeinationService: Service() {
         }
 
         wakeLock.acquire()
-
-        startTimer()
     }
 
     fun releaseWakelock(reason: String = "unknown") {
