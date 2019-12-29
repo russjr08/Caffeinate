@@ -27,7 +27,6 @@ class CaffeinationService: Service() {
     private lateinit var sharedPrefs: SharedPreferences
 
     private val stopActionReceiver = ActionReceiver()
-    private val infiniteActionReceiver = ActionReceiver()
     private val stopIntent = Intent()
 
 
@@ -40,9 +39,10 @@ class CaffeinationService: Service() {
     var infiniteMode = false
 
 
-    val WL_TAG = "Caffeinate"
+    val WL_TAG = "Caffeinate:WAKELOCK"
 
     private val NOTIFICATION_CHANNEL_ID = "caffeination_in_progress"
+    private val NOTIFICATION_IN_PROGRESS_ID = 200
 
     inner class LocalBinder: Binder() {
         fun getService(): CaffeinationService {
@@ -135,7 +135,6 @@ class CaffeinationService: Service() {
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        setupNotificationTestDefaults()
 
         val intentFilter = IntentFilter(Intent.ACTION_SCREEN_OFF)
 
@@ -193,7 +192,7 @@ class CaffeinationService: Service() {
         tile?.state = Tile.STATE_ACTIVE
         tile?.updateTile()
         buildNotification()
-        startForeground(50, notification)
+        startForeground(NOTIFICATION_IN_PROGRESS_ID, notification)
     }
 
     fun startTimer(time: Long = sharedPrefs.getString("caffeine_time_limit", "300000").toLong()) {
@@ -210,7 +209,7 @@ class CaffeinationService: Service() {
                 timeLeft = remains
                 buildNotification()
                 val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notificationManager.notify(50, notification)
+                notificationManager.notify(NOTIFICATION_IN_PROGRESS_ID, notification)
                 tile?.updateTile()
             }
 
@@ -226,7 +225,7 @@ class CaffeinationService: Service() {
         val analytics = FirebaseAnalytics.getInstance(this.applicationContext)
         analytics.setUserProperty("hides_launcher_icon", launcherIconUserProp)
         analytics.setUserProperty("screen_timeout_option", sharedPrefs.getString("caffeine_time_limit", "300000"))
-        startForeground(50, notification)
+        startForeground(NOTIFICATION_IN_PROGRESS_ID, notification)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -306,7 +305,7 @@ class CaffeinationService: Service() {
     fun createWakelock() {
         if(config.getBoolean("persistent_notification_for_tileservice") ||
                 sharedPrefs.getBoolean("opt_into_notification_test", false)) {
-            startForeground(101, notification)
+            startForeground(NOTIFICATION_IN_PROGRESS_ID, notification)
         }
 
         wakeLock.acquire()
