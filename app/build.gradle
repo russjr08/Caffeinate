@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     lintOptions {
         abortOnError false
@@ -13,9 +13,9 @@ android {
     defaultConfig {
         applicationId "xyz.omnicron.caffeinate"
         minSdkVersion 24
-        targetSdkVersion 28
-        versionCode 31
-        versionName "3.4.1"
+        targetSdkVersion 29
+        versionCode 32
+        versionName "3.4.2"
     }
     buildTypes {
         release {
