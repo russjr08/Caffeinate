@@ -195,7 +195,7 @@ class CaffeinationService: Service() {
         startForeground(NOTIFICATION_IN_PROGRESS_ID, notification)
     }
 
-    fun startTimer(time: Long = sharedPrefs.getString("caffeine_time_limit", "300000").toLong()) {
+    fun startTimer(time: Long = sharedPrefs.getString("caffeine_time_limit", "300000")!!.toLong()) {
         Log.d("Caffeine", "Starting caffeination timer for " + time)
         timer?.cancel()
         timer = object: CountDownTimer(time, 1000) {
@@ -245,7 +245,7 @@ class CaffeinationService: Service() {
         resetState()
 
         if((application as Caffeine).bound && (application as Caffeine).connection != null) {
-            applicationContext.unbindService((application as Caffeine).connection)
+            applicationContext.unbindService((application as Caffeine).connection!!)
             (application as Caffeine).bound = false
         }
         (application as Caffeine).initializeServiceConnection()
@@ -261,7 +261,7 @@ class CaffeinationService: Service() {
         tile?.updateTile()
 
         if((application as Caffeine).bound && (application as Caffeine).connection != null) {
-            applicationContext.unbindService((application as Caffeine).connection)
+            applicationContext.unbindService((application as Caffeine).connection!!)
             (application as Caffeine).bound = false
         }
         (application as Caffeine).initializeServiceConnection()
