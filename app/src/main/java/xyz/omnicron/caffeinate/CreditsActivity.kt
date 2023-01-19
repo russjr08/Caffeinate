@@ -1,20 +1,19 @@
 package xyz.omnicron.caffeinate
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.method.LinkMovementMethod
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.content_credits.*
 import xyz.omnicron.caffeinate.adapters.CreditsAdapter
 import xyz.omnicron.caffeinate.models.Language
 
 class CreditsActivity : AppCompatActivity() {
 
-    private val db = FirebaseFirestore.getInstance()
     private var languages = mutableListOf<Language>()
     private var adapter = CreditsAdapter(languages)
 
+    // TODO: Reimplement credits back into Application
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_credits)
@@ -23,25 +22,11 @@ class CreditsActivity : AppCompatActivity() {
         text_contrib_invitation.movementMethod = LinkMovementMethod.getInstance()
 
         refresh_holder.isEnabled = false
-        refresh_holder.isRefreshing = true
+        refresh_holder.isRefreshing = false
 
-        credits_contrib_list.layoutManager = LinearLayoutManager(this)
+        credits_contrib_list.layoutManager =
+            LinearLayoutManager(this)
         credits_contrib_list.adapter = adapter
-
-        db.collection("contrib_languages").get().addOnCompleteListener { it ->
-            it.addOnCompleteListener {
-                refresh_holder.isRefreshing = false
-                if(it.isSuccessful) {
-                    for(doc in it.result!!) {
-                        System.out.println("${doc.id} => ${doc.data}")
-                        val language = Language(doc.id, doc.get("lang_name") as String, doc.get("contributors") as List<String>)
-                        languages.add(language)
-                        adapter.notifyDataSetChanged()
-
-                    }
-                }
-            }
-        }
 
 
     }

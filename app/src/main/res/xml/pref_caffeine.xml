@@ -12,7 +12,7 @@
     <EditTextPreference
         android:key="caffeine_timer_increment_val"
         android:title="Timer Increment Value"
-        android:summary="Sets how long tapping the Caffeine tile will increase the timer by (specified in seconds, default is 5 minutes)."
+        android:summary="Sets how long tapping the Caffeine tile will increase the timer by (specified in seconds, default is 5 minutes). This option is ignored when notification permissions are not provided to Caffeinate, in order to allow you to disable Caffeination by clicking the tile."
         android:dialogMessage="Enter increment value in seconds"
         android:inputType="number"
         android:defaultValue="300" />

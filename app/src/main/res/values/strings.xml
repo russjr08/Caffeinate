@@ -53,6 +53,11 @@
 
     <string name="credits_invitation_text">If you\'d like to help translate Caffeinate to your language, <a href='https://poeditor.com/join/project/ZYB37nK4gR'>click here</a>. Your help is greatly appreciated!</string>
     <string name="pref_caffeine_instant_infinite_title">Skip To Infinite Mode</string>
-    <string name="pref_caffeine_instant_infinite_summary">When enabled, Caffeinate\'s countdown will be skipped, and will go straight to infinity mode.</string>
+    <string name="pref_caffeine_instant_infinite_summary">When enabled, Caffeinate\'s countdown will be skipped, and will go straight to infinity mode. This option is only effective when Caffeinate has notification permissions, so that you do not accidentally forget that infinity mode is active.</string>
+    <string name="credits_unavailable">Credit contents are temporarily unavailable, and will return in a future release!</string>
+
+    <string name="notification_request_permission_warning">Caffeinate requires your permission to send you notifications about it\'s on-going status!</string>
+    <string name="notification_request_permission_option_allow">Sure!</string>
+    <string name="notification_request_permission_option_deny">No thanks!</string>
 
 </resources>

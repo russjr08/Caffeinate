@@ -1,14 +1,16 @@
 package xyz.omnicron.caffeinate.services
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.*
+import android.content.pm.PackageManager
 import android.graphics.drawable.Icon
 import android.os.*
 import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.util.Log
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import androidx.core.content.ContextCompat
 import xyz.omnicron.caffeinate.ActionReceiver
 import xyz.omnicron.caffeinate.Caffeine
 import xyz.omnicron.caffeinate.R
@@ -23,7 +25,6 @@ class CaffeinationService: Service() {
     private lateinit var wakeLock: PowerManager.WakeLock
     private var timer: CountDownTimer? = null
     private lateinit var notification: Notification
-    private val config: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
     private lateinit var sharedPrefs: SharedPreferences
 
     private val stopActionReceiver = ActionReceiver()
@@ -54,6 +55,7 @@ class CaffeinationService: Service() {
         return mBinder
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     fun buildNotification() {
 
         val infiniteIntent = Intent(baseContext, ActionReceiver::class.java)
@@ -63,13 +65,27 @@ class CaffeinationService: Service() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val launcherIntent = Intent(this, SettingsActivity::class.java)
-        val stopPendingIntent = PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val stopPendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_MUTABLE)
+        } else {
+            PendingIntent.getBroadcast(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
 
         infiniteIntent.action = "xyz.omnicron.caffeinate.TIMER_SET_INFINITE"
         timerResetIntent.action = "xyz.omnicron.caffeinate.TIMER_RESET"
 
-        val infinitePendingIntent = PendingIntent.getBroadcast(this, 2, infiniteIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val timerResetPendingIntent = PendingIntent.getBroadcast(this, 1, timerResetIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val infinitePendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getBroadcast(this, 2, infiniteIntent, PendingIntent.FLAG_MUTABLE)
+        } else {
+            PendingIntent.getBroadcast(this, 2, infiniteIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val timerResetPendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getBroadcast(this, 1, timerResetIntent, PendingIntent.FLAG_MUTABLE)
+        } else {
+            PendingIntent.getBroadcast(this, 1, timerResetIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
 
 
         val builder: Notification.Builder
@@ -83,10 +99,16 @@ class CaffeinationService: Service() {
             notificationChannel.enableLights(false)
             notificationManager.createNotificationChannel(notificationChannel)
 
+            val pendingIntentFlag = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.FLAG_MUTABLE
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            }
+
             builder = Notification.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
                     .setContentTitle(getString(R.string.notification_caffeinate_title))
                     .setSmallIcon(if(!infiniteMode) R.drawable.ic_tile_icon_24dp else R.drawable.ic_infinity_black_24dp)
-                    .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    .setContentIntent(PendingIntent.getActivity(this, 1, launcherIntent, pendingIntentFlag))
                     .setPriority(Notification.PRIORITY_MAX)
                     .setStyle(Notification.BigTextStyle().bigText(if(infiniteMode) getString(R.string.caffeination_in_progress_infinite) else getString(R.string.caffeination_in_progress, timeConversion(timeLeft))))
                     .addAction(R.drawable.ic_stop, getString(R.string.notification_caffeinate_action_cancel), stopPendingIntent)
@@ -125,7 +147,6 @@ class CaffeinationService: Service() {
     override fun onCreate() {
         super.onCreate()
         Log.d("Caffeine", "Caffeination Service is now running.")
-        setupNotificationTestDefaults()
 
         stopIntent.action = "xyz.omnicron.caffeinate.STOP_ACTION"
 
@@ -160,7 +181,13 @@ class CaffeinationService: Service() {
         buildNotification()
 
         if(sharedPrefs.getBoolean("caffeine_instant_infinite_toggle", false)) {
-            setToInfinite()
+            if(ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                setToInfinite()
+            } else {
+                startTimer()
+                Log.w("CaffeinateService", "User is opted-in to infinity mode, but has not granted notification permissions - ignoring infinity mode request!")
+                Log.d("CaffeinateService", "Time Remaining: $timeLeft // Infinite Mode: $infiniteMode")
+            }
         } else {
             startTimer()
         }
@@ -222,9 +249,7 @@ class CaffeinationService: Service() {
         } else {
             "Yes"
         }
-        val analytics = FirebaseAnalytics.getInstance(this.applicationContext)
-        analytics.setUserProperty("hides_launcher_icon", launcherIconUserProp)
-        analytics.setUserProperty("screen_timeout_option", sharedPrefs.getString("caffeine_time_limit", "300000"))
+
         startForeground(NOTIFICATION_IN_PROGRESS_ID, notification)
     }
 
@@ -238,7 +263,6 @@ class CaffeinationService: Service() {
     override fun onDestroy() {
         unregisterReceiver(receiver)
         unregisterReceiver(stopActionReceiver)
-        logDestructionEvent()
         timer?.cancel()
         releaseWakelock()
 
@@ -293,21 +317,12 @@ class CaffeinationService: Service() {
         return String.format("%s:%s", minutes, strSeconds)
     }
 
-
-    fun logDestructionEvent() {
-        val bundle = Bundle()
-        bundle.putString("notification_enabled",
-                config.getBoolean("persistent_notification_for_tileservice").toString())
-        FirebaseAnalytics.getInstance(this).logEvent("service_destruction", bundle)
-    }
-
-
     fun createWakelock() {
-        if(config.getBoolean("persistent_notification_for_tileservice") ||
-                sharedPrefs.getBoolean("opt_into_notification_test", false)) {
+        if(sharedPrefs.getBoolean("opt_into_notification_test", false)) {
             startForeground(NOTIFICATION_IN_PROGRESS_ID, notification)
         }
 
+        //TODO: Check to see how long the configured wake time is, and pass it into wakeLock.acquire()
         wakeLock.acquire()
     }
 
@@ -318,20 +333,9 @@ class CaffeinationService: Service() {
 
         resetState()
 
-        val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "stop_caffeination")
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Caffeination End")
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, reason)
-        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-
         stopForeground(Service.STOP_FOREGROUND_REMOVE)
         stopSelf()
 
     }
-
-    private fun setupNotificationTestDefaults() {
-        (application as Caffeine).updateFirebaseRemoteConfigs()
-    }
-
 
 }

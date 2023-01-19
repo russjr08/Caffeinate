@@ -1,13 +1,19 @@
 package xyz.omnicron.caffeinate.services
 
+import android.Manifest
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.preference.PreferenceManager
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import android.util.Log
+import android.util.Log.WARN
+import androidx.core.content.ContextCompat
 import xyz.omnicron.caffeinate.Caffeine
 import xyz.omnicron.caffeinate.R
 
@@ -23,6 +29,7 @@ class CaffeinateTileService : TileService() {
     override fun onClick() {
         super.onClick()
         val service = Intent(this, CaffeinationService::class.java)
+
         val caffeine = application as Caffeine
 
         if(qsTile?.state == Tile.STATE_INACTIVE) {
@@ -52,7 +59,7 @@ class CaffeinateTileService : TileService() {
             }
 
             if(caffeine.caffeinationService != null) {
-                if (caffeine.caffeinationService?.infiniteMode!!) {
+                if (caffeine.caffeinationService?.infiniteMode!! || !hasNotificationPermissions()) {
                     caffeine.caffeinationService?.releaseWakelock("user_cancelled")
                 } else {
                     val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -67,6 +74,15 @@ class CaffeinateTileService : TileService() {
         }
 
         qsTile?.updateTile()
+    }
+
+    fun hasNotificationPermissions(): Boolean {
+        if(ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            return true
+        } else {
+            Log.w("CaffeinateService", "User is trying to increase the timer, but has not granted notification permissions - cancelling timer instead!")
+        }
+        return false
     }
 
     override fun onTileAdded() {

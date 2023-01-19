@@ -1,17 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- <SwitchPreference
-        android:defaultValue="false"
-        android:key="opt_into_notification_test"
-        android:summary="@string/setting_summary_notificationtest"
-        android:title="@string/setting_title_notificationtest" /> -->
-
-    <Preference
-        android:key="ab_test_debug"
-        android:title="A/B Testing Debug Screen">
-        <intent android:action="xyz.omnicron.caffeinate.ABTestingDebugActivity"/>
-    </Preference>
-
     <SwitchPreference
         android:key="show_launcher_icon"
         android:defaultValue="true"

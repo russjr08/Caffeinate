@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.preference.*
 import android.view.MenuItem
 import android.widget.Toast
-import com.google.firebase.analytics.FirebaseAnalytics
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On
@@ -77,35 +76,22 @@ class SettingsActivity : AppCompatPreferenceActivity() {
 
         override fun onSharedPreferenceChanged(prefs: SharedPreferences, key: String) {
             if(context != null) {
-                val analytics = FirebaseAnalytics.getInstance(context)
-
-                if (key == "opt_into_notification_test") {
-                    analytics.setUserProperty("opt_in_notification", prefs.getBoolean("opt_into_notification_test", false).toString())
-                    // If user toggles this setting, register the change in analytics.
-                }
-
-                if (key == "caffeine_time_limit") {
-                    analytics.setUserProperty("screen_timeout_option", prefs.getString("caffeine_time_limit", "300000"))
-                }
-
                 if (key == "show_launcher_icon") {
                     val packageManager = activity.packageManager
                     if (prefs.getBoolean("show_launcher_icon", true)) {
                         packageManager.setComponentEnabledSetting(ComponentName(context, MainActivity::class.java),
                                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
                         Toast.makeText(this.context, "Launcher icon enabled!", Toast.LENGTH_SHORT).show()
-                        analytics.setUserProperty("hides_launcher_icon", "No")
                     } else {
                         packageManager.setComponentEnabledSetting(ComponentName(context, MainActivity::class.java),
                                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
                         Toast.makeText(this.context, "Launcher icon disabled (may not hide until reboot)! WARNING: To get back into settings, tap the caffeination notification.", Toast.LENGTH_LONG).show()
-                        analytics.setUserProperty("hides_launcher_icon", "Yes")
                     }
-
                 }
             }
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.pref_general)
@@ -122,6 +108,7 @@ class SettingsActivity : AppCompatPreferenceActivity() {
 //            bindPreferenceSummaryToValue(findPreference("example_list"))
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onOptionsItemSelected(item: MenuItem): Boolean {
             val id = item.itemId
             if (id == android.R.id.home) {
@@ -130,17 +117,8 @@ class SettingsActivity : AppCompatPreferenceActivity() {
             }
             return super.onOptionsItemSelected(item)
         }
-
-        override fun onResume() {
-            super.onResume()
-        }
-
-        override fun onPause() {
-            super.onPause()
-        }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     class CaffeinePreferenceFragment : PreferenceFragment(), OnSharedPreferenceChangeListener {
 
 
@@ -151,15 +129,9 @@ class SettingsActivity : AppCompatPreferenceActivity() {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.pref_caffeine)
             setHasOptionsMenu(true)
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-//            bindPreferenceSummaryToValue(findPreference("example_text"))
-//            bindPreferenceSummaryToValue(findPreference("example_list"))
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onOptionsItemSelected(item: MenuItem): Boolean {
             val id = item.itemId
             if (id == android.R.id.home) {
@@ -167,14 +139,6 @@ class SettingsActivity : AppCompatPreferenceActivity() {
                 return true
             }
             return super.onOptionsItemSelected(item)
-        }
-
-        override fun onResume() {
-            super.onResume()
-        }
-
-        override fun onPause() {
-            super.onPause()
         }
     }
 
