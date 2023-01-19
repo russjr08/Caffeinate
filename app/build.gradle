@@ -17,7 +17,7 @@ android {
         applicationId "xyz.omnicron.caffeinate"
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 33
+        versionCode 34
         versionName "3.5"
     }
     buildTypes {
@@ -47,11 +47,6 @@ dependencies {
 }
 repositories {
     mavenCentral()
-    maven {
-        url 'https://maven.google.com/'
-        name 'Google'
-    }
 }
 
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'

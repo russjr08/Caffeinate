@@ -1,6 +1,6 @@
 # Caffeinate - Privacy Policy
 
-*Last Updated: January 19th, 2023 - Caffeinate Version 3.5 (Version Code: 33)*
+*Last Updated: January 19th, 2023 - Caffeinate Version 3.5 (Version Code: 34)*
 
 Thanks for choosing to utilize Caffeinate! Caffeinate does not collect any personal information from your device, nor does it require network access of any sorts.
 
