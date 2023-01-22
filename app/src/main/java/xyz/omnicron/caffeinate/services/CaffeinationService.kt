@@ -181,12 +181,16 @@ class CaffeinationService: Service() {
         buildNotification()
 
         if(sharedPrefs.getBoolean("caffeine_instant_infinite_toggle", false)) {
-            if(ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                setToInfinite()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if(ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                    setToInfinite()
+                } else {
+                    startTimer()
+                    Log.w("CaffeinateService", "User is opted-in to infinity mode, but has not granted notification permissions - ignoring infinity mode request!")
+                    Log.d("CaffeinateService", "Time Remaining: $timeLeft // Infinite Mode: $infiniteMode")
+                }
             } else {
-                startTimer()
-                Log.w("CaffeinateService", "User is opted-in to infinity mode, but has not granted notification permissions - ignoring infinity mode request!")
-                Log.d("CaffeinateService", "Time Remaining: $timeLeft // Infinite Mode: $infiniteMode")
+                setToInfinite()
             }
         } else {
             startTimer()

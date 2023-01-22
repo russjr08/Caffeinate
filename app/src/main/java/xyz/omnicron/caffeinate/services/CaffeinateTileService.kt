@@ -76,7 +76,11 @@ class CaffeinateTileService : TileService() {
         qsTile?.updateTile()
     }
 
-    fun hasNotificationPermissions(): Boolean {
+    private fun hasNotificationPermissions(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return true // Runtime permissions are not implemented until Android SDK Tiramisu (33)
+        }
+
         if(ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             return true
         } else {

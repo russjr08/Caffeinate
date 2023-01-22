@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +19,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val versionTextView = this.findViewById<TextView>(R.id.version_info)
+        versionTextView.text = versionTextView.text
+            .replace(Regex.fromLiteral("%VER"), BuildConfig.VERSION_NAME)
+            .replace("%V_CODE", BuildConfig.VERSION_CODE.toString(), true)
 
         checkAndWarnIfNoNotifications()
     }
@@ -48,7 +54,10 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun checkAndWarnIfNoNotifications() {
+    private fun checkAndWarnIfNoNotifications() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return // Runtime permissions are not implemented until Android SDK Tiramisu (33)
+        }
 
         val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             isGranted: Boolean ->
