@@ -201,8 +201,8 @@ class CaffeinationService: Service() {
     fun increaseTimer(increaseBy: Long) {
         timer?.cancel()
         val newTime = timeLeft + increaseBy
-
-        if(newTime > 3600000) { // 1 hour
+        val maxTimerValue = sharedPrefs.getString("caffeine_timer_max_val", "60")!!.toLong()
+        if(newTime > (maxTimerValue * 60000)) { // 1 hour
             setToInfinite()
         } else {
             tile?.label = timeConversion(newTime)
@@ -317,6 +317,10 @@ class CaffeinationService: Service() {
         var strSeconds = seconds.toString()
         if(seconds < 10) {
             strSeconds = String.format("0%s", strSeconds)
+        }
+
+        if(hours > 0) {
+            return String.format("%s:%s:%s", hours, minutes, strSeconds)
         }
         return String.format("%s:%s", minutes, strSeconds)
     }

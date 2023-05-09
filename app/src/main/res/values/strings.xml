@@ -59,5 +59,8 @@
     <string name="notification_request_permission_warning">Caffeinate requires your permission to send you notifications about it\'s on-going status!</string>
     <string name="notification_request_permission_option_allow">Sure!</string>
     <string name="notification_request_permission_option_deny">No thanks!</string>
+    <string name="pref_caffeine_max_timer">Timer Maximum Value</string>
+    <string name="pref_caffeine_max_timer_description">Sets the maximum timer that the Caffeine tile will reach when tapping it to extend the timer, specified in minutes (default value is 60 minutes). After this value, Caffeinate will enter infinity mode.</string>
+    <string name="pref_caffeine_max_timer_popup">Enter maximum value in minutes</string>
 
 </resources>

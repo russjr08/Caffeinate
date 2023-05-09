@@ -17,8 +17,8 @@ android {
         applicationId "xyz.omnicron.caffeinate"
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 35
-        versionName "3.5.1"
+        versionCode 36
+        versionName "3.6"
     }
     buildTypes {
         release {

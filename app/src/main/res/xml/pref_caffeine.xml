@@ -17,6 +17,14 @@
         android:inputType="number"
         android:defaultValue="300" />
 
+    <EditTextPreference
+        android:key="caffeine_timer_max_val"
+        android:title="@string/pref_caffeine_max_timer"
+        android:summary="@string/pref_caffeine_max_timer_description"
+        android:dialogMessage="@string/pref_caffeine_max_timer_popup"
+        android:inputType="number"
+        android:defaultValue="60" />
+
     <SwitchPreference
         android:key="caffeine_screen_dimming"
         android:title="@string/pref_caffeine_screen_dimming_title"
