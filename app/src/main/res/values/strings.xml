@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Caffeinate</string>
+    <string name="app_name" translatable="false">Caffeinate</string>
 
     <string name="caffeinate_tile_label">Caffeinate</string>
     <string name="soundprofile_tile_label_vibrate">Vibrate</string>
